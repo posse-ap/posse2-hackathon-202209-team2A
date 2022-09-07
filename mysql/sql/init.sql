@@ -63,6 +63,15 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (email, password) VALUES ("user@posse.com","pass");
-INSERT INTO users (email, password) VALUES ("user2@posse.com","pass");
+INSERT INTO 
+  users 
+SET
+  email = "user@posse.com",
+  -- password = password_hash("pass",PASSWORD_DEFAULT);
+  password = sha1('pass');
 
+INSERT INTO 
+  users 
+SET
+  email = "user2@posse.com",
+  password = password_hash("pass",PASSWORD_DEFAULT);

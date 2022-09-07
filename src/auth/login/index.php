@@ -4,34 +4,48 @@ require('../../dbconnect.php');
 
 $err_msg = "";
 
+
+
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
-  $password = $_POST['password'];
+  $password = sha1($_POST['password']);
+  // $password_raw = $_POST['password'];
 
-  $sql = 'SELECT count(*) FROM users WHERE email = ? AND password = ?';
-  $stmt = $db->prepare($sql);
-  $stmt->execute(array($email, $password));
-  $result = $stmt->fetch();
+  // $sql_pass = 'SELECT password FROM users WHERE email = ?';
+  // $stmt = $db->prepare($sql_pass);
+  // $stmt->execute(array($email));
+  // $password_hash = $stmt->fetch();
+  // echo $password_hash;
+  // echo $password_hash;
 
-  $sql_session = "SELECT * FROM users WHERE email = ? AND password = ?";
-  $stmt = $db->prepare($sql_session);
-  $stmt->execute(array($email, $password));
-  $login_info = $stmt->fetch();
+    // if(password_verify($password_raw,$password_hash)){
+    //   echo "一致したよ";
+      
+      $sql = 'SELECT count(*) FROM users WHERE email = ? AND password = ?';
+      $stmt = $db->prepare($sql);
+      $stmt->execute(array($email, $password));
+      $result = $stmt->fetch();
 
+      $sql_session = "SELECT * FROM users WHERE email = ? AND password = ?";
+      $stmt = $db->prepare($sql_session);
+      $stmt->execute(array($email, $password));
+      $login_info = $stmt->fetch();
 
+      // result に一つでも値が入っているなら、ログイン情報が存在するということ
+      if ($result[0] != 0) {
+        // 成功した場合トップ画面に遷移
+        $_SESSION['id'] = $login_info['id'];
+        $_SESSION['email'] = $login_info['email'];
 
-  // result に一つでも値が入っているなら、ログイン情報が存在するということ
-  if ($result[0] != 0) {
-    // 成功した場合管理画面に遷移
-
-    $_SESSION['id'] = $login_info['id'];
-    $_SESSION['email'] = $login_info['email'];
-
-    header('Location: http://localhost/index.php');
-    exit;
-  } else {
-    $err_msg = "ユーザー名またはパスワードが間違っています";
-  }
+        header('Location: http://localhost/index.php');
+        exit;
+        } else {
+        $err_msg = "ユーザー名またはパスワードが間違っています";
+        }
+    // }else{
+    //   echo '一致しませんでした';
+    //   $err_msg = "ユーザー名またはパスワードが間違っています2";
+    // }
 }
 ?>
 
