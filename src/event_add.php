@@ -25,18 +25,18 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-  <div class="bg-gray-100 h-screen w-full py-8 px-7">
-    <div class="form w-full mx-auto py-10">
-      <h2 class="title text-md font-bold mb-3">イベント追加</h2>
+  <div>
+    <div>
+      <h2>イベント追加</h2>
     </div>
     <form action="" method="post" id="postForm">
-      <p class="sub mb-0 mt-3">イベント名</p>
+      <p>イベント名</p>
       <input type="text" name="event_name">
-      <p class="sub mb-0 mt-3">開始日時</p>
+      <p>開始日時</p>
       <input type="datetime-local" name="event_start">
-      <p class="sub mb-0 mt-3">終了日時</p>
+      <p>終了日時</p>
       <input type="datetime-local" name="event_end">
-      <p class="sub mb-0 mt-3">イベント詳細</p>
+      <p>イベント詳細</p>
       <input type="text" name="event_detail">
       <input type="submit" value="送信" name="submit">
     </form>
