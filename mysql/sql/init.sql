@@ -57,6 +57,8 @@ INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
 
+
+-- ユーザーログイン
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -70,10 +72,28 @@ INSERT INTO
   users 
 SET
   email = "user@posse.com",
-  password = sha1('pass');
+  password = sha1('pass'), 
+  is_admin = 1;
 
 INSERT INTO 
   users 
 SET
   email = "user2@posse.com",
   password = sha1('pass');
+
+-- パスワードリセット関連です。
+
+DROP TABLE IF EXISTS user_password_reset;
+
+CREATE TABLE user_password_reset (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    pass_token VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO
+    user_password_reset(email, pass_token);
+VALUES
+    ("test@test.com", "test");
+
