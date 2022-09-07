@@ -107,9 +107,8 @@ async function openModal(eventId) {
   });
 
 
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   toggleModal()
 }
