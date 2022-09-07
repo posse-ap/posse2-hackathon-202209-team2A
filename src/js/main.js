@@ -71,8 +71,8 @@ async function openModal(eventId) {
             <p class="text-xl font-bold text-gray-300">不参加</p>
           </div>
           <div class="flex mt-5">
-            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
-            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled>参加しない</button>
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
+            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled>参加しない</button>
           </div>
         `
         break;
