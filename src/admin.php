@@ -35,8 +35,7 @@ $events = $stmt->fetchAll();
 
   <main class="bg-gray-100">
     <nav>
-<<<<<<< HEAD
-      <a href="./login/signup.php">
+      <a href="./auth/login/signup.php">
         <div class="cursor-pointer w-4/5 p-3 m-10 text-xl text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">
           新規ユーザー登録
         </div>
@@ -47,35 +46,6 @@ $events = $stmt->fetchAll();
         </div>
       </a>
     </nav>
-=======
-      <a href="./auth/login/signup.php">
-        <div>
-          新規ユーザー登録
-        </div>
-      </a>
-      <a href="">
-        <div>
-
-        </div>
-      </a>
-    </nav>
-    <div class="w-full mx-auto p-5">
-      <!-- 
-      <div id="filter" class="mb-8">
-        <h2 class="text-sm font-bold mb-3">フィルター</h2>
-        <div class="flex">
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">全て</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
-        </div>
-      </div>
-      -->
-      <!-- 各イベントカード -->
-      <div id="events-list">
-      </div>
-    </div>
->>>>>>> 7bb82b9464bde4fb5f300dd57860e6a69374f16c
   </main>
 </body>
 
