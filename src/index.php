@@ -17,7 +17,8 @@ if (isset($status)) {
   $stmt->execute(array($user_id, $status));
   }
 } else {
-    $stmt = $db->prepare("SELECT * FROM events ORDER BY events.start_at ASC" );
+    // $stmt = $db->prepare("SELECT * FROM events ORDER BY events.start_at ASC" );
+    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL GROUP BY events.id ORDER BY events.start_at ASC;");
     $stmt->execute(array($_SESSION['user_id']));
 }
 $events = $stmt->fetchAll();
