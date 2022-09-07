@@ -62,28 +62,34 @@ async function openModal(eventId) {
       case null:
         modalHTML += `
           <div class="text-center mt-6">
-            <!--
             <p class="text-lg font-bold text-yellow-400">未回答</p>
             <p class="text-xs text-yellow-400">期限 ${event.deadline}</p>
-            -->
           </div>
           <div class="flex mt-5">
-            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="absence" value="absence" onclick="nonParticipateEvent(${eventId})">参加しない</button>
           </div>
         `
         break;
-      case 1:
+      case 'presence':
+        modalHTML += `
+          <div class="text-center mt-10">
+            <p class="text-xl font-bold text-green-400">参加</p>
+          </div>
+          <div class="flex mt-5">
+            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled">参加する</button>
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="absence" value="absence" onclick="nonParticipateEvent(${eventId})">参加しない</button>
+          </div>
+        `
+        break;
+      case 'absence':
         modalHTML += `
           <div class="text-center mt-10">
             <p class="text-xl font-bold text-gray-300">不参加</p>
           </div>
-        `
-        break;
-      case 2:
-        modalHTML += `
-          <div class="text-center mt-10">
-            <p class="text-xl font-bold text-green-400">参加</p>
+          <div class="flex mt-5">
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
+            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled>参加しない</button>
           </div>
         `
         break;
@@ -93,7 +99,9 @@ async function openModal(eventId) {
 
     // アコーディオン
     $(function(){
+      //.accordion1の中のp要素がクリックされたら
       $('.accordion a').click(function(){
+          //クリックされた.accordion1の中のp要素に隣接するul要素が開いたり閉じたりする。
           $(this).next('ul').slideToggle();
       });
   });
@@ -105,6 +113,18 @@ async function openModal(eventId) {
   }
   toggleModal()
 }
+
+
+$(function () {
+  $('.js-menu__item__link_modal').each(function () {
+    $(this).on('click', function () {
+      $("+.submenu_modal", this).slideToggle();
+      $(".open-button_modal").toggleClass('change-direction');
+      $(".open-button_modal .chevron-wrapper_modal").toggleClass('participant-arrow');
+      return false;
+    });
+  });
+});
 
 function closeModal() {
   modalInnerHTML.innerHTML = ''
