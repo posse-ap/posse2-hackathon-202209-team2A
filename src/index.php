@@ -38,7 +38,7 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>"> 
     </div>
   </header>
 
