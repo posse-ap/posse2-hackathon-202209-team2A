@@ -48,13 +48,13 @@ function get_day_of_week($w)
 
   <main class="bg-gray-100">
     <nav>
-      <a href="./login/signup.php">
-        <div>
+      <a href="./auth/login/signup.php">
+        <div class="cursor-pointer w-4/5 p-3 m-10 text-xl text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">
           新規ユーザー登録
         </div>
       </a>
       <a href="./event_add.php">
-        <div>
+        <div class="cursor-pointer w-4/5 p-3 m-10 text-xl text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">
           イベント追加
         </div>
       </a>
