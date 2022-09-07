@@ -18,6 +18,7 @@ CREATE TABLE event_attendance (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   event_id INT NOT NULL,
   user_id INT,
+  status VARCHAR(255),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME
@@ -38,22 +39,22 @@ INSERT INTO events SET name='横モク', start_at='2021/08/23 21:00', end_at='20
 INSERT INTO events SET name='スペモク', start_at='2021/08/24 20:00', end_at='2021/08/24 22:00';
 INSERT INTO events SET name='遊び', start_at='2021/09/22 18:00', end_at='2021/09/22 22:00';
 INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_at='2021/09/03 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/06 22:00';
-INSERT INTO event_attendance SET event_id=1, user_id = 1;
-INSERT INTO event_attendance SET event_id=1, user_id = 1;
-INSERT INTO event_attendance SET event_id=1, user_id = 1;
-INSERT INTO event_attendance SET event_id=2, user_id = 1;
-INSERT INTO event_attendance SET event_id=2, user_id = 1;
-INSERT INTO event_attendance SET event_id=3, user_id = 1;
+INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/07 22:00';
+INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00';
+INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/01 22:00';
+INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 19:00';
+INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
+INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
+INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
 
 DROP TABLE IF EXISTS users;
 
