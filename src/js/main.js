@@ -51,7 +51,7 @@ async function openModal(eventId) {
             -->
           </div>
           <div class="flex mt-5">
-            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
+            <button name="participate" class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
             <!-- 
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold">参加しない</button>
             -->
@@ -94,7 +94,9 @@ function toggleModal() {
 async function participateEvent(eventId) {
   try {
     let formData = new FormData();
+    let userId = document.querySelector("input[name='user_id']").value;
     formData.append('eventId', eventId)
+    formData.append('userId', userId)
     const url = '/api/postEventAttendance.php'
     await fetch(url, {
       method: 'POST',

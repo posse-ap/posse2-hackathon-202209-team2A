@@ -8,6 +8,7 @@ function get_day_of_week ($w) {
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
   return $day_of_week_list["$w"];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +33,8 @@ function get_day_of_week ($w) {
         <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ログイン</a>
       </div>
       -->
+      <!-- ここにユーザーidを埋め込む -->
+      <input type="hidden" name="user_id" value="15">
     </div>
   </header>
 
