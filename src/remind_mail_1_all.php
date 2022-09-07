@@ -24,7 +24,8 @@ $users = $stmt_user->fetchAll();
 foreach ($tomorrow_events as $tomorrow_event) {
 foreach ($users as $user) {
 
-$to = $user['email'];
+$user_name = $user['name'];
+$to = $user_name;
 $tomorrow_event_name = $tomorrow_event['name'];
 $subject = <<<EOT
     ${tomorrow_event_name}リマインドメール（前日 @全員）
@@ -32,13 +33,13 @@ $subject = <<<EOT
 $body = "明日はいよいよ${tomorrow_event_name}イベント当日となっています！";
 $headers = ["From"=>"system@posse-ap.com", "Content-Type"=>"text/plain; charset=UTF-8", "Content-Transfer-Encoding"=>"8bit"];
 
-$name = $user['name'];
 $event_date = $tomorrow_event['start_at'];
 $body = <<<EOT
-{$name}様
+{$user_name}様
 
 
 明日の ${event_date}より『${tomorrow_event_name}』を開催いたします！！！！
+{$user_name}のご参加、楽しみにしています！
 
 【イベント詳細】
 
