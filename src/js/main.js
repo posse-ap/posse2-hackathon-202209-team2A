@@ -38,17 +38,25 @@ async function openModal(eventId) {
       </p>
 
       <hr class="my-4">
-    `
-    modalHTML += `
+    
       <div class="accordion">
         <a class="accordion_click">
           <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
         </a>
         <ul style="display: none">
-          <li>aaa</li>
+          <p class="font-bold">参加者一覧：</p>
+      `
+
+      for (let i = 0; i < event.participant_names.length; i++) {
+      modalHTML += `
+          <li>${event.participant_names[i][0]}</li>
+      `
+      }
+
+      modalHTML += `
         </ul>
       </div>
-    `
+      `
 
     switch (event.participation_status) {
       case null:

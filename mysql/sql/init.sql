@@ -67,4 +67,5 @@ CREATE TABLE users (
 
 INSERT INTO users (email, password, name) VALUES ("user@posse.com","pass", "山田康介");
 INSERT INTO users (email, password, name) VALUES ("user2@posse.com","pass", "寺岡修馬");
+INSERT INTO users (email, password, name) VALUES ("user3@posse.com","pass", "大友裕太");
 

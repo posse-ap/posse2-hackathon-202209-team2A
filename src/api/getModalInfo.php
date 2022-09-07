@@ -31,9 +31,9 @@ if (isset($_GET['eventId'])) {
     $participants_total = $stmt->fetch();
 
     // 参加者の情報を取得
-    $stmt = $db->prepare('SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND user_id = ?');
-    $stmt->execute(array($eventId, $userId));
-    $participation_status = $stmt->fetch();
+    $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+    $stmt->execute(array($eventId));
+    $participant_names = $stmt->fetchAll();
 
 
     $array = [
@@ -47,6 +47,7 @@ if (isset($_GET['eventId'])) {
       'message' => $eventMessage,
       'status' => $status,
       'participation_status' => $participation_status['status'],
+      'participant_names' => $participant_names,
       'deadline' => date("m月d日 H:i:s", strtotime('-3 day', $end_date)),
     ];
     
