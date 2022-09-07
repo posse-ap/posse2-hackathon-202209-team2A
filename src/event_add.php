@@ -8,10 +8,11 @@ if (isset($_POST['submit'])) {
   $event_name = $_POST['event_name'];
   $event_start = $_POST['event_start'];
   $event_end = $_POST['event_end'];
+  $event_detail = $_POST['event_detail'];
 
-  $sql = 'INSERT INTO events(name, start_at, end_at) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO events(name, start_at, end_at, detail) VALUES (?, ?, ?, ?)';
   $stmt = $db->prepare($sql);
-  $stmt->execute(array($event_name, $event_start, $event_end));
+  $stmt->execute(array($event_name, $event_start, $event_end, $event_detail));
 
   header('Location: admin.php');
   exit;
@@ -37,7 +38,7 @@ if (isset($_POST['submit'])) {
       <p>終了日時</p>
       <input type="datetime-local" name="event_end">
       <p>イベント詳細</p>
-      <input type="text" name="event_detail">
+      <input type="text" name="event_detail" name="event_detail">
       <input type="submit" value="送信" name="submit">
     </form>
   </div>
