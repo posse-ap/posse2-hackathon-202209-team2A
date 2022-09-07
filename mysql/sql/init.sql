@@ -54,3 +54,15 @@ INSERT INTO event_attendance SET event_id=1, user_id = 1;
 INSERT INTO event_attendance SET event_id=2, user_id = 1;
 INSERT INTO event_attendance SET event_id=2, user_id = 1;
 INSERT INTO event_attendance SET event_id=3, user_id = 1;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO users (email, password) VALUES ("user@posse.com","pass");
+INSERT INTO users (email, password) VALUES ("user2@posse.com","pass");
+
