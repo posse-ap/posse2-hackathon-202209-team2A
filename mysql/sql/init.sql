@@ -68,7 +68,6 @@ INSERT INTO
   users 
 SET
   email = "user@posse.com",
-  -- password = password_hash("pass",PASSWORD_DEFAULT);
   password = sha1('pass');
 
 INSERT INTO 
