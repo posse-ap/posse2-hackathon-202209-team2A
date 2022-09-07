@@ -41,14 +41,14 @@ function get_day_of_week($w)
 
   <main class="bg-gray-100">
     <nav>
-      <a href="./login/signup.php">
+      <a href="./auth/login/signup.php">
         <div>
           新規ユーザー登録
         </div>
       </a>
       <a href="">
         <div>
-          
+
         </div>
       </a>
     </nav>
