@@ -7,7 +7,7 @@ if (isset($_GET['eventId'])) {
   $eventId = htmlspecialchars($_GET['eventId']);
   $userId = $_SESSION['user_id'];
   try {
-    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
+    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
     $stmt->execute(array($eventId));
     $event = $stmt->fetch();
     
@@ -20,10 +20,15 @@ if (isset($_GET['eventId'])) {
     elseif ($event['id'] % 3 === 2) $status = 1;
     else $status = 2;
 
-    
+    // 参加状況
     $stmt = $db->prepare('SELECT user_id, status FROM event_attendance WHERE event_id = ? AND user_id = ?');
     $stmt->execute(array($eventId, $userId));
     $participation_status = $stmt->fetch();
+
+    // 参加者の合計を求める
+    $stmt = $db->prepare("SELECT COUNT(user_id) FROM event_attendance WHERE event_id = ? AND status = 'presence'");
+    $stmt->execute(array($event['id']));
+    $participants_total = $stmt->fetch();
 
     $array = [
       'id' => $event['id'],
@@ -32,7 +37,7 @@ if (isset($_GET['eventId'])) {
       'day_of_week' => get_day_of_week(date("w", $start_date)),
       'start_at' => date("H:i", $start_date),
       'end_at' => date("H:i", $end_date),
-      'total_participants' => $event['total_participants'],
+      'total_participants' => $participants_total[0],
       'message' => $eventMessage,
       'status' => $status,
       'participation_status' => $participation_status['status'],
