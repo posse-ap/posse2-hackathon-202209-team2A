@@ -35,7 +35,7 @@ if (isset($_POST['submit_email'])) {
     新しいパスワードをご登録ください。
     パスワードリセットの申請に心当たりがない場合は、以降の対応は不要となります。
     パスワードの再設定URL：
-    http://localhost/auth/login/reset.php?pass_reset=${$passResetToken}
+    http://localhost/auth/login/reset.php?pass_reset=$passResetToken
     ";
     $headers = ["From" => "posse-ap", "Content-Type" => "text/plain; charset=UTF-8", "Content-Transfer-Encoding" => "8bit"];;
 
