@@ -56,4 +56,23 @@ if (isset($_POST['submit'])) {
   </div>
 </body>
 
+<body>
+  <div>
+    <div>
+      <h2>イベント編集</h2>
+    </div>
+    <form action="" method="post" id="postForm">
+      <p>イベント名</p>
+      <input type="text" name="event_name" value="<?= $event['name'] ?>">
+      <p>開始日時</p>
+      <input type="datetime-local" name="event_start" value="<?= $event['start_at'] ?>">
+      <p>終了日時</p>
+      <input type="datetime-local" name="event_end" value="<?= $event['end_at'] ?>">
+      <p>イベント詳細</p>
+      <input type="text" name="event_detail" value="<?= $event['detail'] ?>">
+      <input type="submit" value="送信" name="submit">
+    </form>
+  </div>
+</body>
+
 </html>
