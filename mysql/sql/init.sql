@@ -61,9 +61,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(255) NOT NULL,  
+  name VARCHAR(255)
 );
 
-INSERT INTO users (email, password) VALUES ("user@posse.com","pass");
-INSERT INTO users (email, password) VALUES ("user2@posse.com","pass");
+INSERT INTO users (email, password, name) VALUES ("user@posse.com","pass", "山田康介");
+INSERT INTO users (email, password, name) VALUES ("user2@posse.com","pass", "寺岡修馬");
 

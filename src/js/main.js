@@ -38,9 +38,18 @@ async function openModal(eventId) {
       </p>
 
       <hr class="my-4">
-
-      <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
     `
+    modalHTML += `
+      <div class="accordion">
+        <a class="accordion_click">
+          <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
+        </a>
+        <ul style="display: none">
+          <li>aaa</li>
+        </ul>
+      </div>
+    `
+
     switch (event.participation_status) {
       case null:
         modalHTML += `
@@ -78,11 +87,36 @@ async function openModal(eventId) {
         break;
     }
     modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
+
+
+    // アコーディオン
+    $(function(){
+      //.accordion1の中のp要素がクリックされたら
+      $('.accordion a').click(function(){
+          //クリックされた.accordion1の中のp要素に隣接するul要素が開いたり閉じたりする。
+          $(this).next('ul').slideToggle();
+      });
+  });
+
+
+
   } catch (error) {
     console.log(error)
   }
   toggleModal()
 }
+
+
+$(function () {
+  $('.js-menu__item__link_modal').each(function () {
+    $(this).on('click', function () {
+      $("+.submenu_modal", this).slideToggle();
+      $(".open-button_modal").toggleClass('change-direction');
+      $(".open-button_modal .chevron-wrapper_modal").toggleClass('participant-arrow');
+      return false;
+    });
+  });
+});
 
 function closeModal() {
   modalInnerHTML.innerHTML = ''
@@ -108,7 +142,7 @@ async function participateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -133,7 +167,7 @@ async function nonParticipateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -144,4 +178,3 @@ async function nonParticipateEvent(eventId) {
     console.log(error)
   }
 }
-
