@@ -17,8 +17,8 @@ if (isset($status)) {
 $events = $stmt->fetchAll();
 
 // ユーザーが管理者かを確認
-$sql = 'SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?';
-$stmt = $db->query($sql, $user_id);
+$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
+$stmt->execute(array($user_id));
 $is_admin = $stmt->fetch();
 
 function get_day_of_week($w)

@@ -25,27 +25,21 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-  <div class="change">
+  <div class="bg-gray-100 h-screen w-full py-8 px-7">
+    <div class="form w-full mx-auto py-10">
+      <h2 class="title text-md font-bold mb-3">イベント追加</h2>
+    </div>
     <form action="" method="post" id="postForm">
-      <div>
-        <label for="event_name" id="event_name">イベント名</label>
-        <input type="text" name="event_name">
-      </div>
-      <div>
-        <label for="event_start">開始日時</label>
-        <input type="datetime-local" name="event_start">
-      </div>
-      <div>
-        <label for="event_end">終了日時</label>
-        <input type="datetime-local" name="event_end">
-      </div>
-      <div>
-        <label for="event_detail">イベント詳細</label>
-        <textarea name="event_detail"></textarea>
-      </div>
-      <input type="submit" value="追加" name="submit">
+      <p class="sub mb-0 mt-3">イベント名</p>
+      <input type="text" name="event_name" class="event__add__form__event__name  event__add__form__item w-full p-4 text-sm mb-2 h-14 rounded">
+      <p class="sub mb-0 mt-3">開始日時</p>
+      <input type="datetime-local" name="event_start" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
+      <p class="sub mb-0 mt-3">終了日時</p>
+      <input type="datetime-local" name="event_end" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
+      <p class="sub mb-0 mt-3">イベント詳細</p>
+      <input type="text" name="event_detail" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
+      <input type="submit" value="送信" name="submit" class="event__add__form__button cursor-pointer w-full p-3 text-md text-white rounded-3xl posse-gradatation-blue">
     </form>
-  </div>
   </div>
 </body>
 
