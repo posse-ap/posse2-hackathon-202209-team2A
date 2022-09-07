@@ -59,37 +59,6 @@ function get_day_of_week($w)
         </div>
       </a>
     </nav>
-    <!-- 各イベントカード -->
-    <div id="events-list">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-sm font-bold">一覧</h2>
-      </div>
-      <?php foreach ($events as $event) : ?>
-        <?php
-        $start_date = strtotime($event['start_at']);
-        $end_date = strtotime($event['end_at']);
-        $day_of_week = get_day_of_week(date("w", $start_date));
-        $today = strtotime("today");
-
-        // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
-        if ($start_date < $today) {
-          continue;
-        };
-        ?>
-
-        <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
-          <div>
-            <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
-            <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
-            <p class="text-xs text-gray-600">
-              <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
-            </p>
-            <a href="./event_edit.php?id=<?= $event['id'] ?>">編集</a>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-    </div>
   </main>
 </body>
 
