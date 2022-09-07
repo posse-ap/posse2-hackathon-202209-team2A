@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
       </div>
       <div>
         <label for="event_detail">イベント詳細</label>
-        <textarea name="event_detail"></textarea>
+        <input type="text" name="event_detail">
       </div>
       <input type="submit" value="追加" name="submit">
     </form>
