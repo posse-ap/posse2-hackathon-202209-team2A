@@ -40,6 +40,18 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
+    <nav>
+      <a href="./login/signup.php">
+        <div>
+          新規ユーザー登録
+        </div>
+      </a>
+      <a href="">
+        <div>
+          
+        </div>
+      </a>
+    </nav>
     <div class="w-full mx-auto p-5">
       <!-- 
       <div id="filter" class="mb-8">
