@@ -6,16 +6,15 @@ $eventId = $_POST['eventId'];
 $userId = $_POST['userId'];
 $status = $_POST['status'];
 
-$sql = 'SELECT COUNT(user_id) FROM event_attendance WHERE user_id = ? AND event_id = ?';
-$stmt = $db->prepare($sql);
+$stmt = $db->prepare('SELECT COUNT(user_id) FROM event_attendance WHERE user_id = ? AND event_id = ?');
 $stmt->execute(array($userId, $eventId));
 $number = $stmt->fetch();
 
-
-if ($eventId > 0 && $number = 0) {
+// 重複している値がない場合は挿入、ある場合はステータス更新
+if ($eventId > 0 && $number[0] == 0) {
   $stmt = $db->prepare('INSERT INTO event_attendance SET event_id=?, user_id = ?, status = ?');
   $stmt->execute(array($eventId, $userId, $status));
 } else {
-  $stmt = $db->prepare('UPDATE event_attendance SET user_id = ?, status = ? WHERE event_id = ?');
-  $stmt->execute(array($userId, $status, $eventId));
+  $stmt = $db->prepare('UPDATE event_attendance SET status = ? WHERE event_id = ? AND user_id = ?');
+  $stmt->execute(array($status, $eventId, $userId));
 }
