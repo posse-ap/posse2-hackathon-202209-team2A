@@ -7,9 +7,7 @@ $err_msg = "";
 
 if (isset($_POST['signup'])) {
   $email = $_POST['email'];
-  // $password = sha1($_POST['password']);
-  $password = $_POST['password'];
-
+  $password = sha1($_POST['password']);
     $sql = 'INSERT INTO users(email, password)
           VALUES(?, ?)';
     $stmt = $db->prepare($sql);

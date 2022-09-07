@@ -21,7 +21,7 @@ require('../../dbconnect.php');
       <h1 class="util_login_title util_login_title--long">ユーザー新規登録</h1>
       <div class="signup_done">
         <p class="signup_done_text">ユーザー新規登録が完了いたしました。</p>
-        <a class="util_login_link" href="../../auth/login/index.php">ログイン画面に戻る</a>
+        <a class="util_login_link" href="../../auth/login/index.php">ログイン画面へ</a>
       </div>
     </div>
   </div>
