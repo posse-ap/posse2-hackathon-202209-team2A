@@ -30,6 +30,12 @@ if (isset($_GET['eventId'])) {
     $stmt->execute(array($event['id']));
     $participants_total = $stmt->fetch();
 
+    // 参加者の情報を取得
+    $stmt = $db->prepare('SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND user_id = ?');
+    $stmt->execute(array($eventId, $userId));
+    $participation_status = $stmt->fetch();
+
+
     $array = [
       'id' => $event['id'],
       'name' => $event['name'],
