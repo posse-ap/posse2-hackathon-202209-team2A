@@ -79,6 +79,11 @@ function get_day_of_week($w)
           $day_of_week = get_day_of_week(date("w", $start_date));
           $today = strtotime("today");
 
+          // イベントごとのステータス取得
+          $stmt = $db->prepare('SELECT user_id, status FROM event_attendance WHERE event_id = ? AND user_id = ?');
+          $stmt->execute(array($event['id'], $user_id));
+          $participation_status = $stmt->fetch();
+
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
             continue;
@@ -95,19 +100,13 @@ function get_day_of_week($w)
             </div>
             <div class="flex flex-col justify-between text-right">
               <div>
-                <?php if ($event['id'] % 3 === 1) : ?>
-                  <!--
+                <?php if (is_null($participation_status['status'])) : ?>
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
-                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
-                  -->
-                <?php elseif ($event['id'] % 3 === 2) : ?>
-                  <!-- 
+                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日 H:i:s", strtotime('-3 day', $end_date)); ?></p>
+                <?php elseif ($participation_status['status'] == 'absence') : ?>
                   <p class="text-sm font-bold text-gray-300">不参加</p>
-                  -->
-                <?php else : ?>
-                  <!-- 
+                <?php elseif ($participation_status['status'] == 'presence') : ?>
                   <p class="text-sm font-bold text-green-400">参加</p>
-                  -->
                 <?php endif; ?>
               </div>
               <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
