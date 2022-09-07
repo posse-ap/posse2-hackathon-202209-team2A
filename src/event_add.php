@@ -31,14 +31,14 @@ if (isset($_POST['submit'])) {
     </div>
     <form action="" method="post" id="postForm">
       <p class="sub mb-0 mt-3">イベント名</p>
-      <input type="text" name="event_name" class="event__add__form__event__name  event__add__form__item w-full p-4 text-sm mb-2 h-14 rounded">
+      <input type="text" name="event_name">
       <p class="sub mb-0 mt-3">開始日時</p>
-      <input type="datetime-local" name="event_start" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
+      <input type="datetime-local" name="event_start">
       <p class="sub mb-0 mt-3">終了日時</p>
-      <input type="datetime-local" name="event_end" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
+      <input type="datetime-local" name="event_end">
       <p class="sub mb-0 mt-3">イベント詳細</p>
-      <input type="text" name="event_detail" class="event__add__form__event__date event__add__form__item w-full p-4 text-sm mb-3 rounded">
-      <input type="submit" value="送信" name="submit" class="event__add__form__button cursor-pointer w-full p-3 text-md text-white rounded-3xl posse-gradatation-blue">
+      <input type="text" name="event_detail">
+      <input type="submit" value="送信" name="submit">
     </form>
   </div>
 </body>
