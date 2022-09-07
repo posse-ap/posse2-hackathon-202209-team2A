@@ -72,7 +72,8 @@ INSERT INTO
   users 
 SET
   email = "user@posse.com",
-  password = sha1('pass');
+  password = sha1('pass'), 
+  is_admin = 1;
 
 INSERT INTO 
   users 
