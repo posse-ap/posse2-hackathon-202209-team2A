@@ -89,23 +89,22 @@ async function openModal(eventId) {
         break;
     }
     modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
+
+
+    // アコーディオン
+    $(function(){
+      $('.accordion a').click(function(){
+          $(this).next('ul').slideToggle();
+      });
+  });
+
+
+
   } catch (error) {
     console.log(error)
   }
   toggleModal()
 }
-
-
-$(function () {
-  $('.js-menu__item__link_modal').each(function () {
-    $(this).on('click', function () {
-      $("+.submenu_modal", this).slideToggle();
-      $(".open-button_modal").toggleClass('change-direction');
-      $(".open-button_modal .chevron-wrapper_modal").toggleClass('participant-arrow');
-      return false;
-    });
-  });
-});
 
 function closeModal() {
   modalInnerHTML.innerHTML = ''
