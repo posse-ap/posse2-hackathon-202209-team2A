@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
   // result に一つでも値が入っているなら、ログイン情報が存在するということ
   if ($result[0] != 0) {
     // 成功した場合トップ画面に遷移
-    $_SESSION['id'] = $login_info['id'];
+    $_SESSION['user_id'] = $login_info['id'];
     $_SESSION['email'] = $login_info['email'];
 
     header('Location: http://localhost/index.php');
