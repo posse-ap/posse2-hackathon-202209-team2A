@@ -4,7 +4,25 @@ session_start();
 
 require('./auth/login/login-check.php');
 
-$stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
+$user_id = $_SESSION['user_id'];
+// URLで受け渡した参加ステータスを取得
+$status = filter_input(INPUT_GET, 'status');
+
+// ステータスに値がある場合（参加or不参加）
+if (isset($status)) {
+  if ($status == 'all') {
+    $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
+    $stmt->execute();
+    // URLで受け渡した、参加不参加情報をもとに絞り込み
+  } else {
+    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? GROUP BY events.id ORDER BY events.start_at ASC");
+    $stmt->execute(array($user_id, $status));
+  }
+  // ステータスに値がない場合（未回答）event tableには存在するがevent_attendance tableにはないレコードを取得
+} else {
+  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL GROUP BY events.id ORDER BY events.start_at ASC;");
+  $stmt->execute(array($_SESSION['user_id']));
+}
 $events = $stmt->fetchAll();
 
 function get_day_of_week($w)
@@ -12,7 +30,6 @@ function get_day_of_week($w)
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
   return $day_of_week_list["$w"];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -38,23 +55,31 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="15">
+      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
     </div>
   </header>
 
   <main class="bg-gray-100">
     <div class="w-full mx-auto p-5">
-      <!-- 
+      <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">全て</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
+          <a href="./index.php?status=all" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "all") {
+                                                                                                                    echo 'bg-blue-600 text-white';
+                                                                                                                  } ?>">全て</a>
+          <a href="./index.php?status=presence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "presence") {
+                                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                                      } ?>">参加</a>
+          <a href="./index.php?status=absence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "absence") {
+                                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                                      } ?>">不参加</a>
+          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == null) {
+                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                      } ?>">未回答</a>
         </div>
       </div>
-      -->
+
       <!-- 各イベントカード -->
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
@@ -66,6 +91,7 @@ function get_day_of_week($w)
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           $today = strtotime("today");
+
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
             continue;

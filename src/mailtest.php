@@ -6,7 +6,7 @@ mb_internal_encoding('UTF-8');
 $to = "hackathon-teamX@posse-ap.com";
 $subject = "PHPからメール送信サンプル";
 $body = "本文";
-$headers = ["From" => "system@posse-ap.com", "Content-Type" => "text/plain; charset=UTF-8", "Content-Transfer-Encoding" => "8bit"];
+$headers = ["From"=>"system@posse-ap.com", "Content-Type"=>"text/plain; charset=UTF-8", "Content-Transfer-Encoding"=>"8bit"];
 
 $name = "テスト";
 $date = "2021年08月01日（日） 21:00~23:00";
@@ -20,8 +20,5 @@ ${date}に${event}を開催します。
 http://localhost/
 EOT;
 
-if (mb_send_mail($to, $subject, $body, $headers)) {
-  echo "成功";
-} else {
-  echo "失敗";
-}
+mb_send_mail($to, $subject, $body, $headers);
+echo "メールを送信しました";
