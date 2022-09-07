@@ -62,7 +62,7 @@ function get_day_of_week($w)
       <!-- ここにユーザーidを埋め込む -->
       <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
 
-      <?php if ($is_admin[0] != 0) { ?>
+      <?php if ($is_admin[0] !== 0) { ?>
         <a href="./admin.php" class="cursor-pointer p-2 text-sm text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">管理画面へ</a>
       <?php } ?>
 
