@@ -48,12 +48,12 @@ INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/06 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/06 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/06 22:00';
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=1;
-INSERT INTO event_attendance SET event_id=2;
-INSERT INTO event_attendance SET event_id=2;
-INSERT INTO event_attendance SET event_id=3;
+INSERT INTO event_attendance SET event_id=1, user_id = 1;
+INSERT INTO event_attendance SET event_id=1, user_id = 1;
+INSERT INTO event_attendance SET event_id=1, user_id = 1;
+INSERT INTO event_attendance SET event_id=2, user_id = 1;
+INSERT INTO event_attendance SET event_id=2, user_id = 1;
+INSERT INTO event_attendance SET event_id=3, user_id = 1;
 
 DROP TABLE IF EXISTS users;
 

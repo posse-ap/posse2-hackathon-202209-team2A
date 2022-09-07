@@ -94,7 +94,9 @@ function toggleModal() {
 async function participateEvent(eventId) {
   try {
     let formData = new FormData();
+    let userId = document.querySelector("input[name='user_id']").value;
     formData.append('eventId', eventId)
+    formData.append('userId', userId)
     const url = '/api/postEventAttendance.php'
     await fetch(url, {
       method: 'POST',
