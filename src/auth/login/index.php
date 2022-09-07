@@ -4,9 +4,13 @@ require('../../dbconnect.php');
 
 $err_msg = "";
 
+
+
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
-  $password = $_POST['password'];
+  // dbに入っているハッシュ化されているパスワードと比較するために
+  // 入力されたパスワードをハッシュ化
+  $password = sha1($_POST['password']);
 
   $sql = 'SELECT count(*) FROM users WHERE email = ? AND password = ?';
   $stmt = $db->prepare($sql);
@@ -18,12 +22,10 @@ if (isset($_POST['login'])) {
   $stmt->execute(array($email, $password));
   $login_info = $stmt->fetch();
 
-
   // result に一つでも値が入っているなら、ログイン情報が存在するということ
   if ($result[0] != 0) {
-    // 成功した場合管理画面に遷移
-
-    $_SESSION['user_id'] = $login_info['id'];
+    // 成功した場合トップ画面に遷移
+    $_SESSION['id'] = $login_info['id'];
     $_SESSION['email'] = $login_info['email'];
 
     header('Location: http://localhost/index.php');
