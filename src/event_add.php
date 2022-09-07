@@ -8,10 +8,11 @@ if (isset($_POST['submit'])) {
   $event_name = $_POST['event_name'];
   $event_start = $_POST['event_start'];
   $event_end = $_POST['event_end'];
+  $event_detail = $_POST['event_detail'];
 
-  $sql = 'INSERT INTO events(name, start_at, end_at) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO events(name, start_at, end_at, detail) VALUES (?, ?, ?, ?)';
   $stmt = $db->prepare($sql);
-  $stmt->execute(array($event_name, $event_start, $event_end));
+  $stmt->execute(array($event_name, $event_start, $event_end, $event_detail));
 
   header('Location: admin.php');
   exit;

@@ -17,8 +17,8 @@ if (isset($status)) {
 $events = $stmt->fetchAll();
 
 // ユーザーが管理者かを確認
-$sql = 'SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?';
-$stmt = $db->query($sql, $user_id);
+$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
+$stmt->execute(array($user_id));
 $is_admin = $stmt->fetch();
 
 function get_day_of_week($w)
@@ -51,7 +51,7 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+      <input type="hidden" name="user_id" value="<?= $user_id ?>">
 
       <?php if ($is_admin[0] != 0) { ?>
         <a href="./admin.php">管理画面へ</a>
