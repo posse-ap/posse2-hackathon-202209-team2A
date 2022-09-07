@@ -39,16 +39,16 @@ INSERT INTO events SET name='横モク', start_at='2021/08/23 21:00', end_at='20
 INSERT INTO events SET name='スペモク', start_at='2021/08/24 20:00', end_at='2021/08/24 22:00';
 INSERT INTO events SET name='遊び', start_at='2021/09/22 18:00', end_at='2021/09/22 22:00';
 INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_at='2021/09/03 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/07 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00';
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/01 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 19:00';
-INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
-INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/06 22:00';
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
@@ -56,16 +56,53 @@ INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
 
+
+-- ユーザーログイン
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,  
-  name VARCHAR(255)
+  name VARCHAR(255),
+  is_admin TINYINT DEFAULT 0
 );
 
-INSERT INTO users (email, password, name) VALUES ("user@posse.com","pass", "山田康介");
-INSERT INTO users (email, password, name) VALUES ("user2@posse.com","pass", "寺岡修馬");
-INSERT INTO users (email, password, name) VALUES ("user3@posse.com","pass", "大友裕太");
+INSERT INTO 
+  users 
+SET
+  email = "user@posse.com",
+  password = sha1('pass'),
+  name="山田康介",   
+  is_admin = 1;
+
+INSERT INTO 
+  users 
+SET
+  email = "user2@posse.com",
+  password = sha1('pass'),
+  name="寺岡修馬";
+
+INSERT INTO 
+  users 
+SET
+  email = "user3@posse.com",
+  password = sha1('pass'),
+  name="大友裕太";
+
+-- パスワードリセット関連です。
+
+DROP TABLE IF EXISTS user_password_reset;
+
+CREATE TABLE user_password_reset (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    pass_token VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO
+    user_password_reset(email, pass_token);
+VALUES
+    ("test@test.com", "test");
 
