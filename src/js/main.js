@@ -51,10 +51,8 @@ async function openModal(eventId) {
             -->
           </div>
           <div class="flex mt-5">
-            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
-            <!-- 
-            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold">参加しない</button>
-            -->
+            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="absence" value="absence" onclick="nonParticipateEvent(${eventId})">参加しない</button>
           </div>
         `
         break;
@@ -94,7 +92,36 @@ function toggleModal() {
 async function participateEvent(eventId) {
   try {
     let formData = new FormData();
+    let userId = document.querySelector("input[name='user_id']").value;
+    let status = document.querySelector("button[name='presence']").value;
     formData.append('eventId', eventId)
+    formData.append('userId', userId)
+    formData.append('status', status)
+    const url = '/api/postEventAttendance.php'
+    await fetch(url, {
+      method: 'POST',
+      body: formData
+    }).then((res) => {
+      if(res.status !== 200) {
+        throw new Error("system error");
+      }
+      return res.text();
+    })
+    closeModal()
+    location.reload()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function nonParticipateEvent(eventId) {
+  try {
+    let formData = new FormData();
+    let userId = document.querySelector("input[name='user_id']").value;
+    let status = document.querySelector("button[name='absence']").value;
+    formData.append('eventId', eventId)
+    formData.append('userId', userId)
+    formData.append('status', status)
     const url = '/api/postEventAttendance.php'
     await fetch(url, {
       method: 'POST',
