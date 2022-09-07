@@ -60,9 +60,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(255) NOT NULL,
+  is_admin TINYINT DEFAULT 0
 );
 
-INSERT INTO users (email, password) VALUES ("user@posse.com","pass");
+INSERT INTO users (email, password, is_admin) VALUES ("user@posse.com","pass", 1);
 INSERT INTO users (email, password) VALUES ("user2@posse.com","pass");
 

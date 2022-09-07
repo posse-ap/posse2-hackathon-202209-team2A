@@ -7,6 +7,12 @@ require('./auth/login/login-check.php');
 $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
 $events = $stmt->fetchAll();
 
+$user_id = $_SESSION['user_id'];
+
+$sql = 'SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?';
+$stmt = $db->query($sql, $user_id);
+$is_admin = $stmt->fetch();
+
 function get_day_of_week($w)
 {
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
@@ -38,7 +44,13 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
+      <?php if ($is_admin[0] != 0) {?>
       <input type="hidden" name="user_id" value="15">
+      <?php } else { ?>
+        <input type="hidden" name="user_id" value="15">
+      <?php } ?>
+
+      <a href="./admin.php">管理画面へ</a>
     </div>
   </header>
 

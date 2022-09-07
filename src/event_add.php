@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
   $stmt = $db->prepare($sql);
   $stmt->execute(array($event_name, $event_start, $event_end));
 
-  // header('Location: home.php');
+  header('Location: admin.php');
   exit;
 }
 ?>
