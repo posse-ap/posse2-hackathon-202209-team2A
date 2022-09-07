@@ -1,7 +1,7 @@
 <?php
 require('dbconnect.php');
 
-$stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
+$stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
 $events = $stmt->fetchAll();
 
 function get_day_of_week($w)
@@ -101,25 +101,6 @@ function get_day_of_week($w)
       </div>
     </div>
   </main>
-
-  <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
-    <div class="modal-overlay absolute w-full h-full bg-black opacity-80"></div>
-
-    <div class="modal-container absolute bottom-0 bg-white w-screen h-4/5 rounded-t-3xl shadow-lg z-50">
-      <div class="modal-content text-left py-6 pl-10 pr-6">
-        <div class="z-50 text-right mb-5">
-          <svg class="modal-close cursor-pointer inline bg-gray-100 p-1 rounded-full" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 18 18">
-            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-          </svg>
-        </div>
-
-        <div id="modalInner"></div>
-
-      </div>
-    </div>
-  </div>
-
-  <script src="/js/main.js"></script>
 </body>
 
 </html>
