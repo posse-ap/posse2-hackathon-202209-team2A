@@ -20,7 +20,13 @@ if (isset($_GET['eventId'])) {
     elseif ($event['id'] % 3 === 2) $status = 1;
     else $status = 2;
 
+    // 参加状況
     $stmt = $db->prepare('SELECT user_id, status FROM event_attendance WHERE event_id = ? AND user_id = ?');
+    $stmt->execute(array($eventId, $userId));
+    $participation_status = $stmt->fetch();
+
+    // 合計参加者数
+    $stmt = $db->prepare('SELECT COUNT(user_id) FROM event_attendance WHERE event_id = ? AND user_id = ?');
     $stmt->execute(array($eventId, $userId));
     $participation_status = $stmt->fetch();
 
