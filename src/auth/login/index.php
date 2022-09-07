@@ -74,7 +74,7 @@ if (isset($_POST['login'])) {
         echo "<p>" . $err_msg .  "</p>";
       } ?>
       <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/">パスワードを忘れた方はこちら</a>
+        <a href="./forget.php">パスワードを忘れた方はこちら</a>
       </div>
     </div>
   </main>
