@@ -84,10 +84,10 @@ function get_day_of_week($w)
           $stmt->execute(array($event['id'], $user_id));
           $participation_status = $stmt->fetch();
 
-          // 参加者合計
-          $stmt = $db->prepare('SELECT user_id, status FROM event_attendance WHERE event_id = ? AND user_id = ?');
-          $stmt->execute(array($event['id'], $user_id));
-          $participation_status = $stmt->fetch();
+          // 参加者の合計を求める
+          $stmt = $db->prepare("SELECT COUNT(user_id) FROM event_attendance WHERE event_id = ? AND status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participants_total = $stmt->fetch();
 
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
@@ -114,7 +114,7 @@ function get_day_of_week($w)
                   <p class="text-sm font-bold text-green-400">参加</p>
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
+              <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
             </div>
           </div>
         <?php endforeach; ?>
