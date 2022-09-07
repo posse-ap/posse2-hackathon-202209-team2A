@@ -66,9 +66,17 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (email, password) VALUES ("user@posse.com","pass");
-INSERT INTO users (email, password) VALUES ("user2@posse.com","pass");
+INSERT INTO 
+  users 
+SET
+  email = "user@posse.com",
+  password = sha1('pass');
 
+INSERT INTO 
+  users 
+SET
+  email = "user2@posse.com",
+  password = sha1('pass');
 
 -- パスワードリセット関連です。
 
@@ -85,3 +93,4 @@ INSERT INTO
     user_password_reset(email, pass_token);
 VALUES
     ("test@test.com", "test");
+
