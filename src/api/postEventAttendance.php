@@ -6,8 +6,7 @@ $eventId = $_POST['eventId'];
 $userId = $_POST['userId'];
 $status = $_POST['status'];
 
-$sql = 'SELECT COUNT(user_id) FROM event_attendance WHERE user_id = ? AND event_id = ?';
-$stmt = $db->prepare($sql);
+$stmt = $db->prepare('SELECT COUNT(user_id) FROM event_attendance WHERE user_id = ? AND event_id = ?');
 $stmt->execute(array($userId, $eventId));
 $number = $stmt->fetch();
 
