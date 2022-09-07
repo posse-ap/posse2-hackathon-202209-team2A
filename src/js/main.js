@@ -39,8 +39,24 @@ async function openModal(eventId) {
 
       <hr class="my-4">
 
-      <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
-    `
+      <div class="accordion">
+        <a class="accordion_click">
+          <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
+        </a>
+        <ul style="display: none">
+          <p class="font-bold">参加者一覧：</p>
+      `
+      for (let i = 0; i < event.participant_names.length; i++) {
+        modalHTML += `
+            <li>${event.participant_names[i][0]}</li>
+        `
+        }
+  
+        modalHTML += `
+          </ul>
+        </div>
+        `
+
     switch (event.participation_status) {
       case null:
         modalHTML += `
@@ -77,6 +93,15 @@ async function openModal(eventId) {
         `
         break;
     }
+    // アコーディオン
+    $(function(){
+        //.accordion1の中のp要素がクリックされたら
+        $('.accordion a').click(function(){
+            //クリックされた.accordion1の中のp要素に隣接するul要素が開いたり閉じたりする。
+            $(this).next('ul').slideToggle();
+        });
+    });
+
     modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
   } catch (error) {
     console.log(error)
