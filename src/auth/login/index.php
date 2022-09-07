@@ -6,7 +6,7 @@ $err_msg = "";
 
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
-  $password = $_POST['password'];
+  $password = sha1($_POST['password']);
 
   $sql = 'SELECT count(*) FROM users WHERE email = ? AND password = ?';
   $stmt = $db->prepare($sql);

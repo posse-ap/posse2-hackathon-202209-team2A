@@ -1,31 +1,24 @@
 <?php
-
 session_start();
 require('../../dbconnect.php');
 
 $email = $_SESSION['email'];
 
 if (isset($_POST['reset'])) {
-  // $password = sha1($_POST['password']);
-  $password = $_POST['password'];
+  $password = sha1($_POST['password']);
 
-
-    $sql = 'UPDATE users
+  $sql = 'UPDATE users
             SET password = ?
             WHERE email = ?';
-    $stmt = $db->prepare($sql);
-    $stmt->execute(array($password, $email));
-    $stmt = null;
-    $db = null;
+  $stmt = $db->prepare($sql);
+  $stmt->execute(array($password, $email));
+  $stmt = null;
+  $db = null;
 
-
-    header('Location: http://localhost/auth/login/reset_done.php');
-    exit;
-  
+  header('Location: http://localhost/auth/login/reset_done.php');
+  exit;
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
