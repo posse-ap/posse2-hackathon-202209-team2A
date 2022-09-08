@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 require('../../dbconnect.php');
 
 $err_msg = "";
@@ -76,6 +78,13 @@ if (isset($_POST['login'])) {
       <div class="text-center text-xs text-gray-400 mt-6">
         <a href="./forget.php">パスワードを忘れた方はこちら</a>
       </div>
+
+      <?php if (!isset($accessToken)) { ?>
+        <div class="text-center text-xs text-gray-400 mt-6">
+          <a href="https://github.com/login/oauth/authorize?client_id=Iv1.04698a71246c50e6">GitHubでサインイン</a>
+        </div>
+      <?php } ?>
+
     </div>
   </main>
 </body>

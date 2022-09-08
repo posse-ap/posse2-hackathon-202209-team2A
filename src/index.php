@@ -1,8 +1,12 @@
 <?php
-require('dbconnect.php');
 session_start();
+require('dbconnect.php');
 
-require('./auth/login/login-check.php');
+if (!isset($_SESSION['github_id'])) {
+  require('./auth/login/login-check.php');
+}
+
+$accessToken = $_SESSION['my_access_token_accessToken'];
 
 $user_id = $_SESSION['user_id'];
 $status = filter_input(INPUT_GET, 'status');
@@ -66,7 +70,16 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="<?= $user_id ?>">
+      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+
+      <?php 
+      
+      // ログインしたuserの名前を取得
+      $stmt_user_name = $db->prepare('SELECT name FROM users WHERE id = ?');
+      $stmt_user_name->execute(array($user_id));
+      $user_name = $stmt_user_name->fetch();
+
+      ?>
 
       <?php if ($is_admin[0] != 0) { ?>
         <a href="./admin.php" class="cursor-pointer p-2 text-sm text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">管理画面へ</a>
@@ -76,9 +89,7 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
-
     <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
-
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
