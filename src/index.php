@@ -5,10 +5,8 @@ session_start();
 require('./auth/login/login-check.php');
 
 $user_id = $_SESSION['user_id'];
-// URLで受け渡した参加ステータスを取得
 $status = filter_input(INPUT_GET, 'status');
 
-// ステータスに値がある場合（参加or不参加）
 if (isset($status)) {
   if ($status == 'all') {
     $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
@@ -25,11 +23,6 @@ if (isset($status)) {
 }
 $events = $stmt->fetchAll();
 
-// ユーザーが管理者かを確認
-$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
-$stmt->execute(array($user_id));
-$is_admin = $stmt->fetch();
-
 function get_day_of_week($w)
 {
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
@@ -45,6 +38,8 @@ function get_day_of_week($w)
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <!-- アコーディオンのためにjqueryロード -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>Schedule | POSSE</title>
 </head>
 
@@ -112,6 +107,11 @@ function get_day_of_week($w)
           $stmt->execute(array($event['id']));
           $participants_total = $stmt->fetch();
 
+          // 参加者の情報を取得
+          $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participant_names = $stmt->fetchAll();
+
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
             continue;
@@ -137,7 +137,17 @@ function get_day_of_week($w)
                   <p class="text-sm font-bold text-green-400">参加</p>
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+              <div class="accordion">
+                <a class="accordion_click">
+                  <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+                </a>
+                <ul style="display: none">
+                  <p class="font-bold">参加者一覧：</p>
+                  <?php foreach ($participant_names as $participant_name) { ?>
+                    <li><?= $participant_name[0] ?></li>
+                  <?php } ?>
+                </ul>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

@@ -51,19 +51,18 @@ INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=1, user_id = 2, status="presence";
+INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=2, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
 
-
--- ユーザーログイン
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
+  name VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   is_admin TINYINT DEFAULT 0
 );
@@ -72,6 +71,7 @@ INSERT INTO
   users 
 SET
   email = "user@posse.com",
+  name = "山田康介",
   password = sha1('pass'), 
   is_admin = 1;
 
@@ -79,6 +79,14 @@ INSERT INTO
   users 
 SET
   email = "user2@posse.com",
+  name = "寺岡修馬",
+  password = sha1('pass');
+
+INSERT INTO 
+  users 
+SET
+  email = "user3@posse.com",
+  name = "大友裕太",
   password = sha1('pass');
 
 -- パスワードリセット関連です。
@@ -92,8 +100,4 @@ CREATE TABLE user_password_reset (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO
-    user_password_reset(email, pass_token);
-VALUES
-    ("test@test.com", "test");
 

@@ -4,8 +4,8 @@ require('../dbconnect.php');
 header('Content-Type: application/json; charset=UTF-8');
 
 if (isset($_GET['eventId'])) {
-  $userId = $_SESSION['user_id'];
   $eventId = htmlspecialchars($_GET['eventId']);
+  $userId = $_SESSION['user_id'];
   try {
     $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
     $stmt->execute(array($eventId));
@@ -30,6 +30,12 @@ if (isset($_GET['eventId'])) {
     $stmt->execute(array($event['id']));
     $participants_total = $stmt->fetch();
 
+    // 参加者の情報を取得
+    $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+    $stmt->execute(array($eventId));
+    $participant_names = $stmt->fetchAll();
+
+
     $array = [
       'id' => $event['id'],
       'name' => $event['name'],
@@ -41,6 +47,7 @@ if (isset($_GET['eventId'])) {
       'message' => $eventMessage,
       'status' => $status,
       'participation_status' => $participation_status['status'],
+      'participant_names' => $participant_names,
       'deadline' => date("m月d日 H:i:s", strtotime('-3 day', $end_date)),
     ];
     

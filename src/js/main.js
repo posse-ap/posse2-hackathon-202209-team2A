@@ -38,9 +38,26 @@ async function openModal(eventId) {
       </p>
 
       <hr class="my-4">
+    
+      <div class="accordion">
+        <a class="accordion_click">
+          <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
+        </a>
+        <ul style="display: none">
+          <p class="font-bold">参加者一覧：</p>
+      `
 
-      <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
-    `
+      for (let i = 0; i < event.participant_names.length; i++) {
+      modalHTML += `
+          <li>${event.participant_names[i][0]}</li>
+      `
+      }
+
+      modalHTML += `
+        </ul>
+      </div>
+      `
+
     switch (event.participation_status) {
       case null:
         modalHTML += `
@@ -77,9 +94,25 @@ async function openModal(eventId) {
         `
         break;
     }
+
+
+    // アコーディオン
+    $(function(){
+        $('.accordion_click').click(function(event){
+            //クリックされた要素に隣接する要素が開いたり閉じたりする
+            $(this).next('ul').slideToggle();
+            // モーダルが開くのを防止
+            return false;
+        });
+    });
+
     modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
+
+
+
+
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   toggleModal()
 }
@@ -108,7 +141,7 @@ async function participateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -133,7 +166,7 @@ async function nonParticipateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -144,4 +177,3 @@ async function nonParticipateEvent(eventId) {
     console.log(error)
   }
 }
-
