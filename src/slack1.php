@@ -32,10 +32,8 @@ $array = [];
 foreach ($participants as $participant) {
     $array[] = $participant['slack_id'];
 }
-var_dump($array);
 
 $mentions = implode("><@",$array);
-
 
 $name = $event['name'];
 $detail = $event['detail'];
@@ -43,14 +41,12 @@ $start_at = $event['start_at'];
 $end_at = $event['end_at'];
 $slack_id = $event['slack_id'];
 
-
-
-
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
     "channel" => "#notify",
     "username" => "イベント通知管理ボット",
     "text" => "
+    ------------------------------------------
     イベント【前日】です！楽しみにしていてください！
 
     ■ イベント名
@@ -64,6 +60,7 @@ $message = [
     
     ■ 参加者一覧
     <@$mentions>
+    ------------------------------------------
     ",
 ];
 
