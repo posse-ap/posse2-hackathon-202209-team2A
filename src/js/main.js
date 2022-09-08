@@ -98,7 +98,7 @@ async function openModal(eventId) {
 
     // アコーディオン
     $(function(){
-        $('.accordion_click').click(function(){
+        $('.accordion_click').click(function(event){
             //クリックされた要素に隣接する要素が開いたり閉じたりする
             $(this).next('ul').slideToggle();
             // モーダルが開くのを防止
