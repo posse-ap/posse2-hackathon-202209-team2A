@@ -4,9 +4,13 @@ require('../../dbconnect.php');
 
 $err_msg = "";
 
+
+
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
-  $password = $_POST['password'];
+  // dbに入っているハッシュ化されているパスワードと比較するために
+  // 入力されたパスワードをハッシュ化
+  $password = sha1($_POST['password']);
 
   $sql = 'SELECT count(*) FROM users WHERE email = ? AND password = ?';
   $stmt = $db->prepare($sql);
@@ -18,11 +22,9 @@ if (isset($_POST['login'])) {
   $stmt->execute(array($email, $password));
   $login_info = $stmt->fetch();
 
-
   // result に一つでも値が入っているなら、ログイン情報が存在するということ
   if ($result[0] != 0) {
-    // 成功した場合管理画面に遷移
-
+    // 成功した場合トップ画面に遷移
     $_SESSION['user_id'] = $login_info['id'];
     $_SESSION['email'] = $login_info['email'];
 
@@ -72,7 +74,7 @@ if (isset($_POST['login'])) {
         echo "<p>" . $err_msg .  "</p>";
       } ?>
       <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/">パスワードを忘れた方はこちら</a>
+        <a href="./forget.php">パスワードを忘れた方はこちら</a>
       </div>
     </div>
   </main>
