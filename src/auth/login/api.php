@@ -39,17 +39,17 @@ $stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE github_id = ?');
 $stmt->execute(array($username));
 $isSignedUp = $stmt->fetch();
 
-$stmt_user = $db->prepare('SELECT id FROM users WHERE github_id = ?');
+$stmt_user = $db->prepare('SELECT id, github_id FROM users WHERE github_id = ?');
 $stmt_user->execute(array($username));
-$userName = $stmt->fetch();
+$userInfo = $stmt_user->fetch();
 
 if ($isSignedUp[0] != 0) {
-  $userName['id'] = $_SESSION['user_id'];
-  echo 'yaaaa';
-  // header('Location: http://localhost/index.php');
+  $_SESSION['user_id'] = $userInfo['id'];
+  $_SESSION['github_id'] = $userInfo['github_id'];
+  header('Location: ../../index.php');
 } else {
   echo 'ユーザー登録していないためログインできません。';
-  // header('Location: ./index.php');
+  header('Location: ./index.php');
 }
 
 

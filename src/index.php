@@ -2,7 +2,9 @@
 session_start();
 require('dbconnect.php');
 
-require('./auth/login/login-check.php');
+if (!isset($_SESSION['github_id'])) {
+  require('./auth/login/login-check.php');
+}
 
 $accessToken = $_SESSION['my_access_token_accessToken'];
 
