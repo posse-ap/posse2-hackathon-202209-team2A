@@ -6,20 +6,21 @@ require('./auth/login/login-check.php');
 
 $user_id = $_SESSION['user_id'];
 $status = filter_input(INPUT_GET, 'status');
+$date = date("y-m-d H:i:s");
 
 if (isset($status)) {
   if ($status == 'all') {
-    $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
-    $stmt->execute();
+    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.start_at >= ? GROUP BY events.id ORDER BY start_at ASC');
+    $stmt->execute(array($date));
     // URLで受け渡した、参加不参加情報をもとに絞り込み
   } else {
-    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? GROUP BY events.id ORDER BY events.start_at ASC");
-    $stmt->execute(array($user_id, $status));
+    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? AND events.start_at >= ? GROUP BY events.id ORDER BY events.start_at ASC");
+    $stmt->execute(array($user_id, $status, $date));
   }
   // ステータスに値がない場合（未回答）event tableには存在するがevent_attendance tableにはないレコードを取得
 } else {
-  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL GROUP BY events.id ORDER BY events.start_at ASC;");
-  $stmt->execute(array($user_id));
+  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL AND events.start_at >= ? GROUP BY events.id ORDER BY events.start_at ASC;");
+  $stmt->execute(array($date));
 }
 $events = $stmt->fetchAll();
 
@@ -98,13 +99,29 @@ function get_day_of_week($w)
         </div>
       </div>
 
+      <!-- ページング関係 -->
+      <?php
+      define('MAX', '10'); // 1ページの記事の表示数
+      $count = count($events);
+      $max_page = ceil($count / MAX); // トータルページ数
+      if (!isset($_GET['page_id'])) { // $_GET['page_id'] はURLに渡された現在のページ数
+        $now = 1; // 設定されてない場合は1ページ目にする
+      } else {
+        $now = $_GET['page_id'];
+      }
+      $start_no = ($now - 1) * MAX; // 配列の何番目から取得すればよいか
+      // array_sliceは、配列の何番目($start_no)から何番目(MAX)まで切り取る関数
+      $disp_data = array_slice($events, $start_no, MAX, true);
+      // ＄disp_dataは要素数が各ページの要素数の配列（ページごとに生成される。）
+      ?>
+
       <!-- 各イベントカード -->
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
-        <?php foreach ($events as $event) : ?>
-          <?php
+        <?php 
+          foreach ($disp_data as $event) : 
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
@@ -125,12 +142,9 @@ function get_day_of_week($w)
           $stmt->execute(array($event['id']));
           $participant_names = $stmt->fetchAll();
 
-          // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
-          if ($start_date < $today) {
-            continue;
-          };
           ?>
 
+          <!-- ここから単体のイベント -->
           <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
             <div>
               <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
@@ -165,6 +179,23 @@ function get_day_of_week($w)
           </div>
         <?php endforeach; ?>
       </div>
+
+
+      <div class="flex justify-evenly">
+        <?php
+        for ($i = 1; $i <= $max_page; $i++) { // 最大ページ数分リンクを作成
+          if ($i == $now) { // 現在表示中のページ数の場合はaタグではなくただの文字
+            // echo $now . ' ';
+            $now_html = "<p>$now</p>";
+            echo $now_html;
+          } else {
+            $page_link_ref = "/index.php?page_id=$i";
+            $page_link_html = "<p><a href='$page_link_ref'>$i</a></p>";
+            echo $page_link_html;
+          }
+        }
+        ?>
+      </div>
     </div>
   </main>
 
@@ -187,5 +218,3 @@ function get_day_of_week($w)
 
   <script src="/js/main.js"></script>
 </body>
-
-</html>
