@@ -62,10 +62,11 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,  
-  name VARCHAR(255)
+  name VARCHAR(255),
+  github_id VARCHAR(255)
 );
 
-INSERT INTO users (email, password, name) VALUES ("user@posse.com","pass", "山田康介");
-INSERT INTO users (email, password, name) VALUES ("user2@posse.com","pass", "寺岡修馬");
-INSERT INTO users (email, password, name) VALUES ("user3@posse.com","pass", "大友裕太");
+INSERT INTO users (email, password, name) VALUES ("user@posse.com","pass", "山田康介", "Y-K-15");
+INSERT INTO users (email, password, name) VALUES ("user2@posse.com","pass", "寺岡修馬", "kohei23n");
+INSERT INTO users (email, password, name) VALUES ("user3@posse.com","pass", "大友裕太", "momo-0315");
 

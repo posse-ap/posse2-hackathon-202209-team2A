@@ -32,7 +32,7 @@ $data = json_decode($response);
 
 $username = $data->login;
 
-var_dump($data);
+// var_dump($data);
 // var_dump($data->login);
 
 $stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE github_username = ?');
@@ -41,6 +41,9 @@ $isSignedUp = $stmt->fetch();
 
 if ($isSignedUp[0] != 0) {
   header('Location: localhost/index.php');
+} else {
+  echo 'ユーザー登録していないためログインできません。';
+  header('Location: localhost/auth/login/index.php');
 }
 
 
