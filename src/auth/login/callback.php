@@ -10,7 +10,6 @@ $code = $_GET['code'];
 $client_id = "Iv1.04698a71246c50e6";
 $client_secret = "faf6112abed6e683ff875919650d80e83a083c00";
 $url = "https://github.com/login/oauth/access_token";
-// POST https://github.com/login/oauth/access_token
 
 $postParams = [
   'client_id' => $client_id,
@@ -30,20 +29,14 @@ curl_close ($ch);
 
 $data = json_decode($response);
 
-// var_dump($data);
-
 // Store token
 if ($data->access_token != "") {
   session_start();
   $_SESSION['my_access_token_accessToken'] = $data->access_token;
 
-  header('Location: http://localhost:80/index.php');
+  header('Location: http://localhost:80/auth/login/api.php');
   exit;
 }
-
-// var_dump($data);
-
-echo $data->error_description;
 
 
 ?>

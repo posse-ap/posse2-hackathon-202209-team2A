@@ -2,11 +2,9 @@
 session_start();
 require('dbconnect.php');
 
-// require('./auth/login/login-check.php');
+require('./auth/login/login-check.php');
 
 $accessToken = $_SESSION['my_access_token_accessToken'];
-
-echo $accessToken;
 
 $user_id = $_SESSION['user_id'];
 $status = filter_input(INPUT_GET, 'status');

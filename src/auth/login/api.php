@@ -1,5 +1,6 @@
 <?php 
 // アクセストークンを用いてPHPリクエスト
+require('../../dbconnect.php');
 
 function error($msg) {
   $response = [];
@@ -20,9 +21,6 @@ $url = "https://api.github.com/user";
 $authHeader = "Authorization: token " . $accessToken;
 $userAgentHeader = "User-Agent: Demo";
 
-echo $authHeader . '<br />';
-echo $userAgentHeader . '<br />';
-
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -32,8 +30,18 @@ curl_close ($ch);
 
 $data = json_decode($response);
 
+$username = $data->login;
 
-var_dump($data)
+var_dump($data);
+// var_dump($data->login);
+
+$stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE github_username = ?');
+$stmt->execute(array($username));
+$isSignedUp = $stmt->fetch();
+
+if ($isSignedUp[0] != 0) {
+  header('Location: localhost/index.php');
+}
 
 
 ?>
