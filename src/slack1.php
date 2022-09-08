@@ -37,7 +37,7 @@ $start_at = $event['start_at'];
 $end_at = $event['end_at'];
 $slack_id = $event['slack_id'];
 
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
     "channel" => "#notify",
     "username" => "イベント通知管理ボット",

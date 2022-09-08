@@ -15,7 +15,7 @@ $stmt = $db->prepare("SELECT events.name, events.detail, events.start_at, events
     where event_attendance.user_id = users.id 
     and event_attendance.event_id = events.id) 
     and '$three_days_later_start' < start_at AND start_at < '$three_days_later_end'
-    and events.id = 19;
+    and events.id = 6;
 ");
 $stmt->execute();
 $event = $stmt->fetch();
@@ -30,7 +30,7 @@ $stmt = $db->prepare("SELECT events.name, events.detail, events.start_at, events
     where event_attendance.user_id = users.id 
     and event_attendance.event_id = events.id) 
     and '$three_days_later_start' < start_at AND start_at < '$three_days_later_end'
-    and events.id = 19;
+    and events.id = 6;
 ");
 $stmt->execute();
 $participants = $stmt->fetchAll();
@@ -56,7 +56,7 @@ $start_at = $event['start_at'];
 $end_at = $event['end_at'];
 $slack_id = $event['slack_id'];
 
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
   "channel" => "#notify",
   "username" => "イベント通知管理ボット",
