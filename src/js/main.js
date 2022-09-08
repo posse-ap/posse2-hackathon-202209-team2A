@@ -59,30 +59,22 @@ async function openModal(eventId) {
       case 1:
         modalHTML += `
           <div class="text-center mt-10">
-<<<<<<< HEAD
             <p class="text-xl font-bold text-green-400">参加</p>
           </div>
           <div class="flex mt-5">
             <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled">参加する</button>
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="absence" value="absence" onclick="nonParticipateEvent(${eventId})">参加しない</button>
-=======
-            <p class="text-xl font-bold text-gray-300">不参加</p>
->>>>>>> e5b064d24954765089b7a4a807ce61ad77261e5a
           </div>
         `
         break;
       case 2:
         modalHTML += `
           <div class="text-center mt-10">
-<<<<<<< HEAD
             <p class="text-xl font-bold text-gray-300">不参加</p>
           </div>
           <div class="flex mt-5">
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
             <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" disabled>参加しない</button>
-=======
-            <p class="text-xl font-bold text-green-400">参加</p>
->>>>>>> e5b064d24954765089b7a4a807ce61ad77261e5a
           </div>
         `
         break;
