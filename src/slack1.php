@@ -27,9 +27,15 @@ AND event_attendance.status = 'presence'
 $stmt->execute();
 $participants = $stmt->fetchAll();
 
+
+$array = [];
 foreach ($participants as $participant) {
-    echo $participant['slack_id'];
+    $array[] = $participant['slack_id'];
 }
+var_dump($array);
+
+$mentions = implode("><@",$array);
+
 
 $name = $event['name'];
 $detail = $event['detail'];
@@ -38,7 +44,9 @@ $end_at = $event['end_at'];
 $slack_id = $event['slack_id'];
 
 
-$url = 'https://hooks.slack.com/services/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';
+
+
+$url = 'https://hooks.slack.com/services/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';
 $message = [
     "channel" => "#notify",
     "username" => "イベント通知管理ボット",
@@ -55,9 +63,12 @@ $message = [
     $start_at ~ $end_at
     
     ■ 参加者一覧
-    <@$slack_id>
+    <@$mentions>
     ",
 ];
+
+// 配列用意、ループで文字列結合（スペース入れながら）
+// そこで変数差し込む
 
 $ch = curl_init();
 $options = [
