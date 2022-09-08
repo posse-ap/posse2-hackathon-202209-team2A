@@ -54,6 +54,14 @@ INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
+INSERT INTO events SET name='コミもく', start_at='2022/09/17 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='posseLab会', start_at='2022/09/18 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='たわーtoタワー', start_at='2022/09/19 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='池to海', start_at='2022/09/20 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='語る会', start_at='2022/09/21 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='睡眠もくもく会', start_at='2022/09/22 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='ありがとうの会', start_at='2022/09/23 18:00', end_at='2022/09/06 22:00';
+
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
@@ -67,30 +75,34 @@ CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255),
-  password VARCHAR(255) NOT NULL,
-  is_admin TINYINT DEFAULT 0
+  password VARCHAR(255) NOT NULL, 
+  is_admin TINYINT DEFAULT 0, 
+  github_id VARCHAR(255)
 );
+
 
 INSERT INTO users
 SET
   email = "user@posse.com",
-  name = "山田康介",
+  name = "横山健人",
   password = sha1('pass'), 
-  is_admin = 1;
+  is_admin = 1,
+  github_id = "Y-K-15";
 
 INSERT INTO users
 SET
   email = "user2@posse.com",
-  name = "寺岡修馬",
-  password = sha1('pass');
+  name = "西川航平",
+  password = sha1('pass'),
+  github_id = "kohei23n";
 
 INSERT INTO 
   users 
 SET
   email = "user3@posse.com",
-  name = "大友裕太",
-  password = sha1('pass');
-
+  name = "冨永桃",
+  password = sha1('pass'),
+  github_id = "momo-0315";
 
 -- パスワードリセット関連です。
 
