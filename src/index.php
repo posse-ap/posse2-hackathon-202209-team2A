@@ -10,17 +10,17 @@ $date = date("y-m-d H:i:s");
 
 if (isset($status)) {
   if ($status == 'all') {
-    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.start_at >= ? GROUP BY events.id ORDER BY start_at ASC');
-    $stmt->execute(array($date));
+    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.start_at >= CURDATE() GROUP BY events.id ORDER BY start_at ASC');
+    $stmt->execute();
     // URLで受け渡した、参加不参加情報をもとに絞り込み
   } else {
-    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? AND events.start_at >= ? GROUP BY events.id ORDER BY events.start_at ASC");
-    $stmt->execute(array($user_id, $status, $date));
+    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? AND events.start_at >= CURDATE() GROUP BY events.id ORDER BY events.start_at ASC");
+    $stmt->execute(array($user_id, $status));
   }
   // ステータスに値がない場合（未回答）event tableには存在するがevent_attendance tableにはないレコードを取得
 } else {
-  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL AND events.start_at >= ? GROUP BY events.id ORDER BY events.start_at ASC;");
-  $stmt->execute(array($date));
+  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL AND events.start_at >= CURDATE() GROUP BY events.id ORDER BY events.start_at ASC;");
+  $stmt->execute();
 }
 $events = $stmt->fetchAll();
 
