@@ -48,6 +48,7 @@ INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at=
 INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00', detail='みんなでいっぱい遊ぼうね！！何しよっか！！！';
 INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
 INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='花火大会言ってないなああって思ったそこのあなた！一緒にいきましょ〜〜';
+INSERT INTO events SET name='夏祭り', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='金魚掬いしよーね！射的もしたいんですけど';
 INSERT INTO events SET name='映画', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='みんなで久しぶりにmovie nightしたいなああ----';
 INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 22:00';
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
