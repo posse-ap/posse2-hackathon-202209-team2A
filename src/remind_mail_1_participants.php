@@ -12,7 +12,11 @@ $tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+1 day"));
 $tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+1 day"));
 
 // ３日後中に行われるイベントのみを取得 同時にuserにおいて、statusがpresence（参加）となってる人のみ取得
-$stmt = $db->prepare("SELECT * FROM events JOIN event_attendance ON event_attendance.event_id = events.id LEFT JOIN users ON event_attendance.user_id = users.id
+$stmt = $db->prepare("SELECT * FROM events 
+JOIN event_attendance 
+ON event_attendance.event_id = events.id 
+LEFT JOIN users 
+ON event_attendance.user_id = users.id
 WHERE '$tomorrow_start' < events.start_at 
 AND events.start_at < '$tomorrow_end' 
 AND event_attendance.status = 'presence'
