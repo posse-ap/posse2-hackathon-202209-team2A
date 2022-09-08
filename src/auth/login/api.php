@@ -45,10 +45,11 @@ $userName = $stmt->fetch();
 
 if ($isSignedUp[0] != 0) {
   $userName['id'] = $_SESSION['user_id'];
-  header('Location: http://localhost/index.php');
+  echo 'yaaaa';
+  // header('Location: http://localhost/index.php');
 } else {
   echo 'ユーザー登録していないためログインできません。';
-  header('Location: ./index.php');
+  // header('Location: ./index.php');
 }
 
 
