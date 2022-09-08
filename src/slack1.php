@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('dbconnect.php');
 
 // 明日の始まりと終わり
@@ -29,7 +29,7 @@ foreach ($participants as $participant) {
     $array[] = $participant['slack_id'];
 }
 
-$mentions = implode("><@",$array);
+$mentions = implode("><@", $array);
 
 $name = $event['name'];
 $detail = $event['detail'];
@@ -37,7 +37,7 @@ $start_at = $event['start_at'];
 $end_at = $event['end_at'];
 $slack_id = $event['slack_id'];
 
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
     "channel" => "#notify",
     "username" => "イベント通知管理ボット",
