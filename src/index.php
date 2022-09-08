@@ -80,27 +80,46 @@ function get_day_of_week($w)
         </div>
       </div>
 
-      <!-- ページング関係 -->
+      <!-- ページング関係 表示されるべきイベントを数えて$countに入る。-->
       <?php
-      
-      $count_sql = 'SELECT count(*) FROM events WHERE start_at < ? ';
-      $stmt = $db->prepare($count_sql);
-      $stmt->execute(array(今日の秒数));
-      $result = $stmt->fetch();
-
-
-      // foreach ($events as $event) :
-      //   $event_start = strtotime($event['start_at']);
-      //   echo $event_start;
-      //   $count_sql = 'SELECT count(*) FROM events WHERE start_at < ? ';
-      //   $stmt = $db->prepare($count_sql);
-      //   $stmt->execute(array());
-      //   $result = $stmt->fetch();
-      // endforeach; ?>
-
-      <?php
-      echo $result;
+      $count = 0;
+      $today_time = strtotime("today");
+      foreach ($events as $event) :
+        $event_start = strtotime($event['start_at']);
+        if ($today_time <= $event_start) {
+          $count++;
+        } else {
+          continue;
+        }
+      endforeach;
+      echo $count;
       ?>
+      <?php
+
+      // $books_numは$countに置き換える。
+
+      define('MAX', '10'); // 1ページの記事の表示数
+      $max_page = ceil($books_num / MAX); // トータルページ数
+      if (!isset($_GET['page_id'])) { // $_GET['page_id'] はURLに渡された現在のページ数
+        $now = 1; // 設定されてない場合は1ページ目にする
+      } else {
+        $now = $_GET['page_id'];
+      }
+      $start_no = ($now - 1) * MAX; // 配列の何番目から取得すればよいか
+      // array_sliceは、配列の何番目($start_no)から何番目(MAX)まで切り取る関数
+      $disp_data = array_slice($events, $start_no, MAX, true);
+
+      
+
+      // foreach ($disp_data as $val) { // データ表示
+      //   echo $val['book_kind'] . '　' . $val['book_name'] . '<br />';
+      // }
+      // 上の３ぎょうは下のほうほforeachです。
+
+
+      ?>
+
+
 
 
       <!-- 各イベントカード -->
@@ -151,6 +170,22 @@ function get_day_of_week($w)
             </div>
           </div>
         <?php endforeach; ?>
+      </div>
+      <div>
+        <?php
+        for ($i = 1; $i <= $max_page; $i++) { // 最大ページ数分リンクを作成
+          if ($i == $now) { // 現在表示中のページ数の場合はリンクを貼らない
+            echo $now . ' ';
+            echo "<p class=>aaaaaa</p>";
+
+          } else {
+
+            // $page_link_ref = "/test.php?page_id=";
+            // $page_link_html = "<a href='$page_link_ref. $i'> . $i . '</a>' . ' ' ";
+            // echo $page_link_html;
+          }
+        }
+        ?>
       </div>
     </div>
   </main>

@@ -49,6 +49,16 @@ INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/06 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/06 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='コミもく', start_at='2022/09/17 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='posseLab会', start_at='2022/09/18 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='たわーtoタワー', start_at='2022/09/19 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='池to海', start_at='2022/09/20 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='語る会', start_at='2022/09/21 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='睡眠もくもく会', start_at='2022/09/22 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='ありがとうの会', start_at='2022/09/23 18:00', end_at='2022/09/06 22:00';
+
+
+
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
