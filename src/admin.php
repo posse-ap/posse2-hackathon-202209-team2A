@@ -42,7 +42,9 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="15">
+      <input type="hidden" name="user_id" value="<?= $user_id ?>">
+
+      <a href="./index.php" class="cursor-pointer p-2 text-sm text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">ユーザー画面へ</a>
     </div>
   </header>
 
