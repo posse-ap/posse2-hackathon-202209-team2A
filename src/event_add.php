@@ -8,10 +8,11 @@ if (isset($_POST['submit'])) {
   $event_name = $_POST['event_name'];
   $event_start = $_POST['event_start'];
   $event_end = $_POST['event_end'];
+  $event_detail = $_POST['event_detail'];
 
-  $sql = 'INSERT INTO events(name, start_at, end_at) VALUES (?, ?, ?)';
+  $sql = 'INSERT INTO events(name, start_at, end_at, detail) VALUES (?, ?, ?, ?)';
   $stmt = $db->prepare($sql);
-  $stmt->execute(array($event_name, $event_start, $event_end));
+  $stmt->execute(array($event_name, $event_start, $event_end, $event_detail));
 
   header('Location: admin.php');
   exit;
@@ -31,7 +32,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-<header class="h-16">
+  <header class="h-16">
     <div class="flex justify-between items-center w-full h-full mx-auto pl-2 pr-5">
       <div class="h-full">
         <img src="/img/header-logo.png" alt="" class="h-full">
@@ -51,7 +52,7 @@ if (isset($_POST['submit'])) {
       <input type="datetime-local" name="event_end" class="w-full">
       <p class="text-xl pt-5 pb-4">イベント詳細</p>
       <input type="text" name="event_detail" class="w-full">
-      <input type="submit" value="送信" name="submit" class="cursor-pointer w-4/5 p-3 m-10 text-xl text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center"> 
+      <input type="submit" value="送信" name="submit" class="cursor-pointer w-4/5 p-3 m-10 text-xl text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">
     </form>
   </div>
 </body>

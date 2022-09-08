@@ -6,8 +6,9 @@ DROP TABLE IF EXISTS events;
 CREATE TABLE events (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(10) NOT NULL,
-  start_at DATETIME,
-  end_at DATETIME,
+  start_at DATETIME NOT NULL,
+  end_at DATETIME NOT NULL,
+  detail TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME
@@ -71,7 +72,8 @@ INSERT INTO
   users 
 SET
   email = "user@posse.com",
-  password = sha1('pass');
+  password = sha1('pass'), 
+  is_admin = 1;
 
 INSERT INTO 
   users 
