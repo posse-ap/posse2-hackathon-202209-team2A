@@ -7,9 +7,9 @@ date_default_timezone_set('Asia/Tokyo');
 mb_language('ja');
 mb_internal_encoding('UTF-8');
 
-// 明日の始まりと終わり
-$tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+3 day"));
-$tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+3 day"));
+// 3日後の始まりと終わり
+$three_days_later_start  = date('Y-m-d 00:00:00', strtotime("+3 day"));
+$three_days_later_end  = date('Y-m-d 23:59:59', strtotime("+3 day"));
 
 //三日後に開催するイベントのみ取得 同時に未回答者のみ抽出
 $stmt = $db->prepare("SELECT *
@@ -20,7 +20,7 @@ $stmt = $db->prepare("SELECT *
      select * from event_attendance 
     where event_attendance.user_id = users.id 
     and event_attendance.event_id = events.id) 
-    and '$tomorrow_start' < start_at AND start_at < '$tomorrow_end';
+    and '$three_days_later_start' < start_at AND start_at < '$three_days_later_end';
 ");
 
 $stmt->execute();
