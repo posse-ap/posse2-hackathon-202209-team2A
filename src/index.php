@@ -91,6 +91,11 @@ function get_day_of_week($w)
           $stmt->execute(array($event['id']));
           $participants_total = $stmt->fetch();
 
+          // 参加者の情報を取得
+          $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participant_names = $stmt->fetchAll();
+
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
             continue;
@@ -116,7 +121,17 @@ function get_day_of_week($w)
                   <p class="text-sm font-bold text-green-400">参加</p>
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+              <div class="accordion">
+                <a class="accordion_click">
+                  <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+                </a>
+                <ul style="display: none">
+                  <p class="font-bold">参加者一覧：</p>
+                  <?php foreach ($participant_names as $participant_name) { ?>
+                    <li><?= $participant_name[0] ?></li>
+                  <?php }?>
+                </ul>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>
