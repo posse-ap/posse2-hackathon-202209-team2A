@@ -109,8 +109,7 @@ function get_day_of_week($w)
       // array_sliceは、配列の何番目($start_no)から何番目(MAX)まで切り取る関数
       $disp_data = array_slice($events, $start_no, MAX, true);
 
-      
-
+      var_dump($disp_data);
       // foreach ($disp_data as $val) { // データ表示
       //   echo $val['book_kind'] . '　' . $val['book_name'] . '<br />';
       // }
@@ -127,7 +126,9 @@ function get_day_of_week($w)
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
-        <?php foreach ($events as $event) : ?>
+        <?php 
+          // foreach ($events as $event) : 
+          foreach ($disp_data as $event) : ?>
           <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
@@ -183,9 +184,12 @@ function get_day_of_week($w)
             // $page_link_ref = "/test.php?page_id=";
             // $page_link_html = "<a href='$page_link_ref. $i'> . $i . '</a>' . ' ' ";
             // echo $page_link_html;
+            echo "<p class=>aaaaaa</p>";
+
           }
         }
         ?>
+
       </div>
     </div>
   </main>
@@ -209,5 +213,3 @@ function get_day_of_week($w)
 
   <script src="/js/main.js"></script>
 </body>
-
-</html>
