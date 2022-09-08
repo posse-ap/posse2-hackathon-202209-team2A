@@ -102,6 +102,7 @@ async function openModal(eventId) {
       $('.accordion_click').click(function(){
           //クリックされた要素に隣接する要素が開いたり閉じたりする
           $(this).next('ul').slideToggle();
+          // モーダルが開くのを防止
           return false;
       });
   });
