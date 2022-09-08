@@ -49,7 +49,7 @@ foreach ($participants as $participant) {
 }
 $mentions = implode("><@", $array);
 
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
   "channel" => "#notify",
   "username" => "イベント通知管理ボット",
@@ -134,7 +134,7 @@ foreach ($participants2 as $participant2) {
 $mentions2 = implode("><@", $array2);
 
 
-$url = 'https://hooks.slack.com/services/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';
+$url = 'https://hooks.slack.com/services/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';
 $message = [
   "channel" => "#notify",
   "username" => "イベント通知管理ボット",
