@@ -2,17 +2,15 @@
 
 $code = $_GET['code'];
 
-if ($code == "") {
-  header('Location: http://localhost:80/index.php');
-  exit;
-}
+// if ($code == "") {
+//   header('Location: http://localhost:80/index.php');
+//   exit;
+// }
 
 $client_id = "Iv1.04698a71246c50e6";
 $client_secret = "faf6112abed6e683ff875919650d80e83a083c00";
 $url = "https://github.com/login/oauth/access_token";
 // POST https://github.com/login/oauth/access_token
-
-// client_secret, client_id, code
 
 $postParams = [
   'client_id' => $client_id,
@@ -30,7 +28,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 $response = curl_exec($ch);
 curl_close ($ch);
 
-$data = json_decode(($response));
+$data = json_decode($response);
 
 // var_dump($data);
 

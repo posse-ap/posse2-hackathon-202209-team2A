@@ -3,9 +3,6 @@
 session_start();
 require('../../dbconnect.php');
 
-$accessToken = $_SESSION['my_access_token_accessToken'];
-
-echo $accessToken;
 $err_msg = "";
 
 
