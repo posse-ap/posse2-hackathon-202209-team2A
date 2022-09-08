@@ -7,7 +7,7 @@ if (isset($_GET['eventId'])) {
   $eventId = htmlspecialchars($_GET['eventId']);
   $userId = $_SESSION['user_id'];
   try {
-    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
+    $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, events.detail FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
     $stmt->execute(array($eventId));
     $event = $stmt->fetch();
     
