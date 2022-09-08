@@ -12,13 +12,30 @@ $user_id = $_SESSION['user_id'];
 $status = filter_input(INPUT_GET, 'status');
 
 if (isset($status)) {
-  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? GROUP BY events.id ORDER BY events.start_at ASC");
-  $stmt->execute(array($user_id, $status));
+  if ($status == 'all') {
+    $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
+    $stmt->execute();
+    // URLで受け渡した、参加不参加情報をもとに絞り込み
+  } else {
+    $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE event_attendance.user_id = ? AND event_attendance.status = ? GROUP BY events.id ORDER BY events.start_at ASC");
+    $stmt->execute(array($user_id, $status));
+  }
+  // ステータスに値がない場合（未回答）event tableには存在するがevent_attendance tableにはないレコードを取得
 } else {
-  $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id  ORDER BY start_at ASC');
-  $stmt->execute();
+  $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL GROUP BY events.id ORDER BY events.start_at ASC;");
+  $stmt->execute(array($user_id));
 }
 $events = $stmt->fetchAll();
+
+
+// ユーザーが管理者かを確認
+$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
+$stmt->execute(array($user_id));
+$is_admin = $stmt->fetch();
+// ログインしたuserの名前を取得
+$stmt_user_name = $db->prepare('SELECT name FROM users WHERE id = ?');
+$stmt_user_name->execute(array($user_id));
+$user_name = $stmt_user_name->fetch();
 
 function get_day_of_week($w)
 {
@@ -62,6 +79,11 @@ function get_day_of_week($w)
       $user_name = $stmt_user_name->fetch();
 
       ?>
+
+      <?php if ($is_admin[0] != 0) { ?>
+        <a href="./admin.php" class="cursor-pointer p-2 text-sm text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">管理画面へ</a>
+      <?php } ?>
+
     </div>
   </header>
 
@@ -72,14 +94,18 @@ function get_day_of_week($w)
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
-          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == null) {
-                                                                                                        echo 'bg-blue-600 text-white';
-                                                                                                      } ?>" id="filter_status_all">全て</a>
+          <a href="./index.php?status=all" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "all") {
+                                                                                                                    echo 'bg-blue-600 text-white';
+                                                                                                                  } ?>">全て</a>
           <a href="./index.php?status=presence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "presence") {
                                                                                                                         echo 'bg-blue-600 text-white';
-                                                                                                                      } ?>" id="filter_status_presence">参加</a>
-          <!-- <a href="./index.php?status=absense" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a> -->
+                                                                                                                      } ?>">参加</a>
+          <a href="./index.php?status=absence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "absence") {
+                                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                                      } ?>">不参加</a>
+          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == null) {
+                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                      } ?>">未回答</a>
         </div>
       </div>
 
@@ -104,6 +130,11 @@ function get_day_of_week($w)
           $stmt = $db->prepare("SELECT COUNT(user_id) FROM event_attendance WHERE event_id = ? AND status = 'presence'");
           $stmt->execute(array($event['id']));
           $participants_total = $stmt->fetch();
+
+          // 参加者の情報を取得
+          $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participant_names = $stmt->fetchAll();
 
           // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
@@ -130,7 +161,17 @@ function get_day_of_week($w)
                   <p class="text-sm font-bold text-green-400">参加</p>
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+              <div class="accordion">
+                <a class="accordion_click">
+                  <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+                </a>
+                <ul style="display: none">
+                  <p class="font-bold">参加者一覧：</p>
+                  <?php foreach ($participant_names as $participant_name) { ?>
+                    <li><?= $participant_name[0] ?></li>
+                  <?php } ?>
+                </ul>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

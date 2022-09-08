@@ -1,13 +1,17 @@
 DROP SCHEMA IF EXISTS posse;
+
 CREATE SCHEMA posse;
+
 USE posse;
 
 DROP TABLE IF EXISTS events;
+
 CREATE TABLE events (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(10) NOT NULL,
-  start_at DATETIME,
-  end_at DATETIME,
+  start_at DATETIME NOT NULL,
+  end_at DATETIME NOT NULL,
+  detail TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME
@@ -41,11 +45,12 @@ INSERT INTO events SET name='遊び', start_at='2021/09/22 18:00', end_at='2021/
 INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_at='2021/09/03 22:00';
 INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/07 22:00';
 INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00';
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/01 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 19:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00', detail='みんなでいっぱい遊ぼうね！！何しよっか！！！';
+INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
+INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='花火大会言ってないなああって思ったそこのあなた！一緒にいきましょ〜〜';
+INSERT INTO events SET name='夏祭り', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='金魚掬いしよーね！射的もしたいんですけど';
+INSERT INTO events SET name='映画', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='みんなで久しぶりにmovie nightしたいなああ----';
+INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 22:00';
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
@@ -61,12 +66,48 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,  
   name VARCHAR(255),
+  password VARCHAR(255) NOT NULL, 
+  is_admin TINYINT DEFAULT 0, 
   github_id VARCHAR(255)
 );
 
-INSERT INTO users (email, password, name, github_id) VALUES ("user@posse.com","pass", "横山健人", "Y-K-15");
-INSERT INTO users (email, password, name, github_id) VALUES ("user2@posse.com","pass", "西川航平", "random");
-INSERT INTO users (email, password, name, github_id) VALUES ("user3@posse.com","pass", "冨永桃", "momo-0315");
 
+INSERT INTO users
+SET
+  email = "user@posse.com",
+  name = "山田康介",
+  password = sha1('pass'), 
+  is_admin = 1,
+  github_id = "Y-K-15";
+
+INSERT INTO users
+SET
+  email = "user2@posse.com",
+  name = "寺岡修馬",
+  password = sha1('pass'),
+  github_id = "kohei23n";
+
+INSERT INTO 
+  users 
+SET
+  email = "user3@posse.com",
+  name = "大友裕太",
+  password = sha1('pass'),
+  github_id = "momo-0315";
+
+-- パスワードリセット関連です。
+
+DROP TABLE IF EXISTS user_password_reset;
+
+CREATE TABLE
+    user_password_reset (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        email VARCHAR(255) NOT NULL,
+        pass_token VARCHAR(255) NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+INSERT INTO user_password_reset(email, pass_token);
+
+VALUES ("test@test.com", "test");
