@@ -1,7 +1,10 @@
 <?php 
 
+define("SLACK_SIGNING_SECRET","0f64190adc00697e6bdb1aef07c3b7f4");
+define("SLACK_BOT_ACCESS_TOKEN","xoxb-4054978785924-4045945148150-JGFo8sICARqXIqfd2SUr7CY7");
+
 $headers = [
-    'Authorization: Bearer xoxb-4054978785924-4045945148150-j7Ix2tjNPtAiI4YJRIwSGWHq', 
+    'Authorization: Bearer SLACK_BOT_ACCESS_TOKEN', 
     'Content-Type: application/json;charset=utf-8'
 ];
 
