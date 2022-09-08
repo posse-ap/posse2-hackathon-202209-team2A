@@ -81,48 +81,21 @@ function get_day_of_week($w)
         </div>
       </div>
 
-      <!-- ページング関係 表示されるべきイベントを数えて$countに入る。-->
+      <!-- ページング関係 -->
       <?php
-      $count = 0;
-      $today_time = strtotime("today");
-      foreach ($events as $event) :
-        $event_start = strtotime($event['start_at']);
-        if ($today_time <= $event_start) {
-          $count++;
-        } else {
-          continue;
-        }
-      endforeach;
-      echo $count;
-      ?>
-      <?php
-
-      // $books_numは$countに置き換える。
-
       define('MAX', '10'); // 1ページの記事の表示数
+      $count = count($events);
       $max_page = ceil($count / MAX); // トータルページ数
       if (!isset($_GET['page_id'])) { // $_GET['page_id'] はURLに渡された現在のページ数
         $now = 1; // 設定されてない場合は1ページ目にする
       } else {
         $now = $_GET['page_id'];
       }
-
       $start_no = ($now - 1) * MAX; // 配列の何番目から取得すればよいか
       // array_sliceは、配列の何番目($start_no)から何番目(MAX)まで切り取る関数
       $disp_data = array_slice($events, $start_no, MAX, true);
-
-      // var_dump($events);
-      var_dump($disp_data);
-      // foreach ($disp_data as $val) { // データ表示
-      //   echo $val['book_kind'] . '　' . $val['book_name'] . '<br />';
-      // }
-      // 上の３ぎょうは下のほうほforeachです。
-
-
+      // ＄disp_dataは要素数が各ページの要素数の配列（ページごとに生成される。）
       ?>
-
-
-
 
       <!-- 各イベントカード -->
       <div id="events-list">
@@ -131,17 +104,10 @@ function get_day_of_week($w)
         </div>
         <?php 
           foreach ($disp_data as $event) : 
-          // foreach ($disp_data as $event) : ?>
-          <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           $today = strtotime("today");
-
-          // strtotimeで今日の0:00を取得 start_dateがそれより前であれば、continueで処理をスキップ
-          if ($start_date < $today) {
-            continue;
-          };
           ?>
 
           <!-- ここから単体のイベント -->
@@ -175,22 +141,22 @@ function get_day_of_week($w)
           </div>
         <?php endforeach; ?>
       </div>
-      <div>
+
+
+      <div class="flex justify-evenly">
         <?php
         for ($i = 1; $i <= $max_page; $i++) { // 最大ページ数分リンクを作成
-          if ($i == $now) { // 現在表示中のページ数の場合はリンクを貼らない
-            echo $now . ' ';
-
+          if ($i == $now) { // 現在表示中のページ数の場合はaタグではなくただの文字
+            // echo $now . ' ';
+            $now_html = "<p>$now</p>";
+            echo $now_html;
           } else {
-
             $page_link_ref = "/index.php?page_id=$i";
-            $page_link_html = "<a href='$page_link_ref'>$i</a>";
+            $page_link_html = "<p><a href='$page_link_ref'>$i</a></p>";
             echo $page_link_html;
-
           }
         }
         ?>
-
       </div>
     </div>
   </main>
