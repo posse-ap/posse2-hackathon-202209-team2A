@@ -1,35 +1,74 @@
 <?php 
+require('dbconnect.php');
 
-define("SLACK_SIGNING_SECRET","0f64190adc00697e6bdb1aef07c3b7f4");
-define("SLACK_BOT_ACCESS_TOKEN","xoxb-4054978785924-4045945148150-JGFo8sICARqXIqfd2SUr7CY7");
+date_default_timezone_set('Asia/Tokyo');
+mb_language('ja');
+mb_internal_encoding('UTF-8');
 
-$headers = [
-    'Authorization: Bearer SLACK_BOT_ACCESS_TOKEN', 
-    'Content-Type: application/json;charset=utf-8'
-];
+// 明日の始まりと終わり
+$tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+1 day"));
+$tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+1 day"));
 
-$url = "https://slack.com/api/chat.postMessage"; 
+// 明日中に行われるイベントのみを取得 同時にuserにおいて、statusがpresence（参加）となってる人のみ取得
+$stmt = $db->prepare("SELECT events.name, events.detail, events.start_at, events.end_at, users.slack_id FROM events JOIN event_attendance ON event_attendance.event_id = events.id LEFT JOIN users ON event_attendance.user_id = users.id
+WHERE '$tomorrow_start' < events.start_at 
+AND events.start_at < '$tomorrow_end' 
+AND event_attendance.status = 'presence'
+");
+$stmt->execute();
+$event = $stmt->fetch();
 
-$post_fields = [
-    "channel" => "@general",
-    "text" => "テスト",
-    "as_user" => false
-];
+// 参加者取得
+$stmt = $db->prepare("SELECT events.name, events.detail, events.start_at, events.end_at, users.slack_id FROM events JOIN event_attendance ON event_attendance.event_id = events.id LEFT JOIN users ON event_attendance.user_id = users.id
+WHERE '$tomorrow_start' < events.start_at 
+AND events.start_at < '$tomorrow_end' 
+AND event_attendance.status = 'presence'
+");
+$stmt->execute();
+$participants = $stmt->fetchAll();
 
-$options = [
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => $headers,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => json_encode($post_fields) 
+foreach ($participants as $participant) {
+    echo $participant['slack_id'];
+}
+
+$name = $event['name'];
+$detail = $event['detail'];
+$start_at = $event['start_at'];
+$end_at = $event['end_at'];
+$slack_id = $event['slack_id'];
+
+
+$url = 'https://hooks.slack.com/services/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';
+$message = [
+    "channel" => "#notify",
+    "username" => "イベント通知管理ボット",
+    "text" => "
+    イベント【前日】です！楽しみにしていてください！
+
+    ■ イベント名
+    $name
+
+    ■ 内容
+    $detail
+
+    ■ 開催日時
+    $start_at ~ $end_at
+    
+    ■ 参加者一覧
+    <@$slack_id>
+    ",
 ];
 
 $ch = curl_init();
-
+$options = [
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query([
+        'payload' => json_encode($message)
+    ])
+];
 curl_setopt_array($ch, $options);
-
-$result = curl_exec($ch); 
-
+curl_exec($ch);
 curl_close($ch);
-
-echo $result;

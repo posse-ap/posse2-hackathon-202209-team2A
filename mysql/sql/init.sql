@@ -78,7 +78,7 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL, 
   is_admin TINYINT DEFAULT 0, 
   github_id VARCHAR(255),
-  slack_id VARCHAR(255);
+  slack_id VARCHAR(255)
 );
 
 
