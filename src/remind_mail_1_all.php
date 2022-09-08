@@ -25,6 +25,8 @@ foreach ($tomorrow_events as $tomorrow_event) {
 foreach ($users as $user) {
 
 $user_name = $user['name'];
+$event_detail = $tomorrow_event['detail'];
+
 $to = $user_name;
 $tomorrow_event_name = $tomorrow_event['name'];
 $subject = <<<EOT
@@ -42,6 +44,8 @@ $body = <<<EOT
 {$user_name}のご参加、楽しみにしています！
 
 【イベント詳細】
+
+{$event_detail}
 
 EOT;
 
