@@ -8,8 +8,8 @@ mb_language('ja');
 mb_internal_encoding('UTF-8');
 
 // 明日の始まりと終わり
-$tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+1 day"));
-$tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+1 day"));
+$tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+3 day"));
+$tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+3 day"));
 
 // ３日後中に行われるイベントのみを取得 同時にuserにおいて、statusがpresence（参加）となってる人のみ取得
 $stmt = $db->prepare("SELECT * FROM events 
@@ -19,12 +19,15 @@ LEFT JOIN users
 ON event_attendance.user_id = users.id
 WHERE '$tomorrow_start' < events.start_at 
 AND events.start_at < '$tomorrow_end' 
-AND event_attendance.status = 'presence'
+AND event_attendance.status IS NULL
 ");
+
 $stmt->execute();
 $participants = $stmt->fetchAll();
 
 foreach ($participants as $participant) {
+
+    var_dump($participant);
 
     $to = $participant['email'];
     $user_name = $participant['name'];
@@ -33,7 +36,7 @@ foreach ($participants as $participant) {
 
     $tomorrow_event_name = $participant[1];
     $subject = <<<EOT
-            『${tomorrow_event_name}』リマインドメール（前日 @参加者）
+            『${tomorrow_event_name}』リマインドメール（３日前 @未回答者）
             EOT;
     $body = "本文";
     $headers = ["From" => "system@posse-ap.com", "Content-Type" => "text/plain; charset=UTF-8", "Content-Transfer-Encoding" => "8bit"];
