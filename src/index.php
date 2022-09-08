@@ -21,7 +21,7 @@ if (isset($status)) {
   // ステータスに値がない場合（未回答）event tableには存在するがevent_attendance tableにはないレコードを取得
 } else {
   $stmt = $db->prepare("SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM event_attendance RIGHT OUTER JOIN events ON events.id = event_attendance.event_id WHERE event_attendance.status IS NULL GROUP BY events.id ORDER BY events.start_at ASC;");
-  $stmt->execute(array($_SESSION['user_id']));
+  $stmt->execute(array($user_id));
 }
 $events = $stmt->fetchAll();
 
@@ -74,7 +74,7 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
-    <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
+    <p class="p-3">ようこそ<?php echo $user_name['name']; ?>さん！</p>
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
