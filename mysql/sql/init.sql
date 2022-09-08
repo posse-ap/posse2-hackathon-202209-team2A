@@ -28,7 +28,7 @@ CREATE TABLE event_attendance (
   deleted_at DATETIME
 );
 
-INSERT INTO events SET name='ハッカソン', start_at='2022/09/08 10:00', end_at='2022/09/03 22:00', detail='頑張るぞ！！';
+INSERT INTO events SET name='ハッカソン', start_at='2022/09/05 10:00', end_at='2022/09/05 22:00', detail='頑張るぞ！！';
 INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00', detail='みんなでいっぱい遊ぼうね！！何しよっか！！！';
 INSERT INTO events SET name='花火大会', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
 INSERT INTO events SET name='夏祭り', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='金魚掬いしよーね！射的もしたいんですけど';
