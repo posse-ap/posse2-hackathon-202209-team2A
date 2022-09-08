@@ -131,7 +131,7 @@ $array2 = [];
 foreach ($participants2 as $participant2) {
   $array2[] = $participant2['slack_id'];
 }
-$mentions2 = implode("><@", $array);
+$mentions2 = implode("><@", $array2);
 
 
 $url = 'https://hooks.slack.com/services/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';
