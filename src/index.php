@@ -80,13 +80,28 @@ function get_day_of_week($w)
         </div>
       </div>
 
-<!-- ページング関係 -->
+      <!-- ページング関係 -->
       <?php
-        $count_sql = 'SELECT count(*) FROM events WHERE start_at = ? ';
-        $stmt = $db->prepare($count_sql);
-        $stmt->execute(array($));
-        $result = $stmt->fetch();
+      
+      $count_sql = 'SELECT count(*) FROM events WHERE start_at < ? ';
+      $stmt = $db->prepare($count_sql);
+      $stmt->execute(array(今日の秒数));
+      $result = $stmt->fetch();
+
+
+      // foreach ($events as $event) :
+      //   $event_start = strtotime($event['start_at']);
+      //   echo $event_start;
+      //   $count_sql = 'SELECT count(*) FROM events WHERE start_at < ? ';
+      //   $stmt = $db->prepare($count_sql);
+      //   $stmt->execute(array());
+      //   $result = $stmt->fetch();
+      // endforeach; ?>
+
+      <?php
+      echo $result;
       ?>
+
 
       <!-- 各イベントカード -->
       <div id="events-list">
