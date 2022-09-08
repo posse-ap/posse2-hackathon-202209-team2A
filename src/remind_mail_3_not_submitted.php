@@ -11,26 +11,22 @@ mb_internal_encoding('UTF-8');
 $tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+3 day"));
 $tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+3 day"));
 
-// ３日後中に行われるイベントのみを取得 同時にuserにおいて、statusがpresence（参加）となってる人のみ取得
-$stmt = $db->prepare("SELECT events.id, events.name, events.start_at, users.name 
-FROM events 
-CROSS JOIN users 
-WHERE events.start_at >= CURDATE() 
-AND NOT EXISTS (
+// ３日後中に行われるイベントのみを取得 同時にuserにおいて、未回答者のみ取得
+$stmt = $db->prepare("SELECT *
+    FROM events 
+    CROSS JOIN users 
+    WHERE events.start_at >= CURDATE() 
+    AND NOT EXISTS (
      select * from event_attendance 
     where event_attendance.user_id = users.id 
     and event_attendance.event_id = events.id) 
-    ORDER BY 'event.name' ASC;
+    and '$tomorrow_start' < start_at AND start_at < '$tomorrow_end';
 ");
-
-
 
 $stmt->execute();
 $participants = $stmt->fetchAll();
 
 foreach ($participants as $participant) {
-
-    var_dump($participant);
 
     $to = $participant['email'];
     $user_name = $participant['name'];
@@ -50,12 +46,14 @@ foreach ($participants as $participant) {
 
     $body = <<<EOT
     {$participant_name}さん
-    参加予定の「${tomorrow_event_name}」の前日となりました。
-    ${three_days_later_date}に始まります！
 
-    参加予定の方にのみ連絡を差し上げています。
+    このメールはイベントアプリの未回答者にのみ送信しています。
+    参加予定の「${tomorrow_event_name}」の３日前となりました。
+    ${three_days_later_date}にイベントが始まります！
+
+
     明日の ${event_date}より『${tomorrow_event_name}』を開催いたします！
-    {$user_name}さんのご参加、楽しみにしています！
+    {$user_name}さん、ぜひ参加してくださいね！
 
     【イベント詳細】
 
