@@ -34,7 +34,7 @@ if ($data->access_token != "") {
   session_start();
   $_SESSION['my_access_token_accessToken'] = $data->access_token;
 
-  header('Location: http://localhost:80/auth/login/api.php');
+  header('Location: http://localhost/auth/login/api.php');
   exit;
 }
 

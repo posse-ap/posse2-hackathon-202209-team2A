@@ -49,7 +49,7 @@ if ($isSignedUp[0] != 0) {
   header('Location: ../../index.php');
 } else {
   echo 'ユーザー登録していないためログインできません。';
-  header('Location: ./index.php');
+  echo '<a href="./index.php">ログイン画面に戻る</a>';
 }
 
 
