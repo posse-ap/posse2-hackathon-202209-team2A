@@ -68,6 +68,8 @@ INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=17, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=17, user_id = 2, status="presence";
 
 DROP TABLE IF EXISTS users;
 
