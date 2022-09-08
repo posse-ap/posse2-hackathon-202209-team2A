@@ -1,10 +1,6 @@
 <?php 
 require('dbconnect.php');
 
-date_default_timezone_set('Asia/Tokyo');
-mb_language('ja');
-mb_internal_encoding('UTF-8');
-
 // 明日の始まりと終わり
 $tomorrow_start  = date('Y-m-d 00:00:00', strtotime("+1 day"));
 $tomorrow_end  = date('Y-m-d 23:59:59', strtotime("+1 day"));
