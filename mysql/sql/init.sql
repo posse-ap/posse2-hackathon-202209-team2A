@@ -28,34 +28,30 @@ CREATE TABLE event_attendance (
   deleted_at DATETIME
 );
 
-INSERT INTO events SET name='ハッカソン', start_at='2022/09/08 10:00', end_at='2022/09/03 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/07 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
+INSERT INTO events SET name='ハッカソン', start_at='2022/09/08 10:00', end_at='2022/09/03 22:00', detail='頑張るぞ！！';
 INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00', detail='みんなでいっぱい遊ぼうね！！何しよっか！！！';
-INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='花火大会言ってないなああって思ったそこのあなた！一緒にいきましょ〜〜';
-INSERT INTO events SET name='夏祭り', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='金魚掬いしよーね！射的もしたいんですけど';
-INSERT INTO events SET name='映画', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='みんなで久しぶりにmovie nightしたいなああ----';
-INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 22:00';
-INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
+INSERT INTO events SET name='花火大会', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
+INSERT INTO events SET name='夏祭り', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='金魚掬いしよーね！射的もしたいんですけど';
+INSERT INTO events SET name='ユニバ', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='ユニバだああああああああ！！！';
+INSERT INTO events SET name='映画', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00', detail='みんなで久しぶりにmovie nightしたいなああ----';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
-INSERT INTO events SET name='コミもく', start_at='2022/09/17 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='posseLab会', start_at='2022/09/18 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='たわーtoタワー', start_at='2022/09/19 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='池to海', start_at='2022/09/20 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='語る会', start_at='2022/09/21 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='睡眠もくもく会', start_at='2022/09/22 18:00', end_at='2022/09/06 22:00';
-INSERT INTO events SET name='ありがとうの会', start_at='2022/09/23 18:00', end_at='2022/09/06 22:00';
+INSERT INTO events SET name='コミもく', start_at='2022/09/17 18:00', end_at='2022/09/17 22:00';
+INSERT INTO events SET name='posseLab会', start_at='2022/09/18 18:00', end_at='2022/09/18 22:00';
+INSERT INTO events SET name='たわーtoタワー', start_at='2022/09/19 18:00', end_at='2022/09/19 22:00';
+INSERT INTO events SET name='池to海', start_at='2022/09/20 18:00', end_at='2022/09/20 22:00';
+INSERT INTO events SET name='語る会', start_at='2022/09/21 18:00', end_at='2022/09/21 22:00';
+INSERT INTO events SET name='睡眠もくもく会', start_at='2022/09/22 18:00', end_at='2022/09/022 22:00';
+INSERT INTO events SET name='ありがとうの会', start_at='2022/09/23 18:00', end_at='2022/09/023 22:00';
 
 INSERT INTO event_attendance SET event_id=1, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
-INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=2, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=17, user_id = 1, status="presence";
-INSERT INTO event_attendance SET event_id=17, user_id = 2, status="presence";
+INSERT INTO event_attendance SET event_id=3, user_id = 2, status="presence";
+INSERT INTO event_attendance SET event_id=4, user_id = 2, status="presence";
+INSERT INTO event_attendance SET event_id=4, user_id = 3, status="presence";
+INSERT INTO event_attendance SET event_id=5, user_id = 1, status = 'absence';
 
 DROP TABLE IF EXISTS users;
 
