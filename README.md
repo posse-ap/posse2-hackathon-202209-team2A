@@ -1,6 +1,6 @@
-## ハッカソン202109
+# ハッカソン202109
 
-### ビルド
+## ビルド
 
 ディレクトリに移動して以下のコマンドを実行してください
 
@@ -9,11 +9,56 @@ docker-compose build --no-cache
 docker-compose up -d
 ```
 
-### 動作確認
+## 動作確認
 
-ブラウザで `http://localhost` にアクセスして、正しく画面が表示されているか確認してください
+### ブラウザで `http://localhost` にアクセスしてください。
+![image](https://user-images.githubusercontent.com/94669039/189110868-00a9a465-2c77-4f95-b83a-89c76365ee8b.png)
 
-### メール送信サンプルについて
+### ログインページが表示されます。
+ログインページ
+<br>
+![image](https://user-images.githubusercontent.com/94669039/189111328-c962b4d6-f93f-4d9c-864c-0bd168862239.png)
+
+### 管理者権限があるアカウントでログインします。
+管理者権限があるアカウントのメールアドレスとパスワードは以下の通りです。実際に入力してログインしてください。
+- メールアドレス ->user@posse.com
+- パスワード ->pass
+<br>
+
+![image](https://user-images.githubusercontent.com/94669039/189111749-67291758-1b18-46ad-a97f-e381f26b431f.png)
+
+### ログイン完了後のトップページ
+管理者権限があるので、ヘッダーの右の部分に管理画面へ進むためのボタンがあります。
+<br>
+![image](https://user-images.githubusercontent.com/94669039/189113786-b65c8ca2-45e8-48cf-874e-1055830e5f07.png)
+
+### 管理画面
+![image](https://user-images.githubusercontent.com/94669039/189113961-ad037e1d-e96a-4629-94e0-8b5efb2a7362.png)
+<br>
+イベント登録するので、「イベント追加」ボタンを押します。
+<br>
+### イベント追加ページ
+ここで、イベント名、開始日時、終了日時、イベント詳細を入力して「送信」ボタンを押すと、イベントが追加されます。
+<br>
+![image](https://user-images.githubusercontent.com/94669039/189115262-d81d8bca-33b0-4908-9a46-976c00f06195.png)
+<br>
+### 管理画面でイベントが追加されたことを確認
+![image](https://user-images.githubusercontent.com/94669039/189115745-fa263246-bd62-46c4-8bd3-ecd84b842d5b.png)
+<br>
+### ユーザー画面でもイベントが追加されたことを確認
+![image](https://user-images.githubusercontent.com/94669039/189115884-f6b04375-5505-4104-86f0-849bdd06df22.png)
+<br>
+### ユーザー画面のイベント詳細画面
+![image](https://user-images.githubusercontent.com/94669039/189116071-bf0e62b3-fe1d-462e-b834-a18fefb79663.png)
+
+### イベント参加登録完了
+![image](https://user-images.githubusercontent.com/94669039/189116326-3bd727e0-bfcb-413c-a3a2-10f43a935935.png)
+
+
+
+
+
+## メール送信サンプルについて
 
 メール送信
 ブラウザで `http://localhost/mailtest.php` にアクセスしてください、テストメールが送信されます
