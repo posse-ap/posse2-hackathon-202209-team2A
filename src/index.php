@@ -92,12 +92,13 @@ function get_day_of_week($w)
           $day_of_week = get_day_of_week(date("w", $start_date));
           $today = strtotime("today");
 
-          // strtotimeで今日の0:00を取得 star_dateがそれより前であれば、continueで処理をスキップ
+          // strtotimeで今日の0:00を取得 start_dateがそれより前であれば、continueで処理をスキップ
           if ($start_date < $today) {
             continue;
           };
           ?>
 
+          <!-- ここから単体のイベント -->
           <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
             <div>
               <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
