@@ -44,15 +44,9 @@ INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/
 INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
 INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00';
-<<<<<<< HEAD
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/01 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 19:00';
-=======
 INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00';
 INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
 INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 22:00';
->>>>>>> 80ff37527206a14622f7950f21cbf11ef873f668
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
 INSERT INTO events SET name='横モク', start_at='2022/09/16 18:00', end_at='2022/09/16 22:00';
