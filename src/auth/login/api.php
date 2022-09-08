@@ -35,15 +35,20 @@ $username = $data->login;
 // var_dump($data);
 // var_dump($data->login);
 
-$stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE github_username = ?');
+$stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE github_id = ?');
 $stmt->execute(array($username));
 $isSignedUp = $stmt->fetch();
 
+$stmt_user = $db->prepare('SELECT id FROM users WHERE github_id = ?');
+$stmt_user->execute(array($username));
+$userName = $stmt->fetch();
+
 if ($isSignedUp[0] != 0) {
-  header('Location: localhost/index.php');
+  $userName['id'] = $_SESSION['user_id'];
+  header('Location: http://localhost/index.php');
 } else {
   echo 'ユーザー登録していないためログインできません。';
-  header('Location: localhost/auth/login/index.php');
+  header('Location: ./index.php');
 }
 
 
