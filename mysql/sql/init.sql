@@ -54,6 +54,8 @@ INSERT INTO event_attendance SET event_id=1, user_id = 3, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 1, status="presence";
 INSERT INTO event_attendance SET event_id=2, user_id = 2, status="presence";
 INSERT INTO event_attendance SET event_id=3, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=17, user_id = 1, status="presence";
+INSERT INTO event_attendance SET event_id=17, user_id = 2, status="presence";
 
 DROP TABLE IF EXISTS users;
 
@@ -63,7 +65,8 @@ CREATE TABLE users (
   name VARCHAR(255),
   password VARCHAR(255) NOT NULL, 
   is_admin TINYINT DEFAULT 0, 
-  github_id VARCHAR(255)
+  github_id VARCHAR(255),
+  slack_id VARCHAR(255)
 );
 
 
@@ -73,14 +76,16 @@ SET
   name = "横山健人",
   password = sha1('pass'), 
   is_admin = 1,
-  github_id = "Y-K-15";
+  github_id = "Y-K-15",
+  slack_id = "U041JCKHHL3";
 
 INSERT INTO users
 SET
   email = "user2@posse.com",
   name = "西川航平",
   password = sha1('pass'),
-  github_id = "kohei23n";
+  github_id = "kohei23n", 
+  slack_id = "U0413U3D3V5";
 
 INSERT INTO 
   users 
@@ -88,7 +93,8 @@ SET
   email = "user3@posse.com",
   name = "冨永桃",
   password = sha1('pass'),
-  github_id = "momo-0315";
+  github_id = "momo-0315",
+  slack_id = "U041X4QBJLR";
 
 -- パスワードリセット関連です。
 
