@@ -5,11 +5,9 @@ session_start();
 require('./auth/login/login-check.php');
 
 $user_id = $_SESSION['user_id'];
-// URLで受け渡した参加ステータスを取得
 $status = filter_input(INPUT_GET, 'status');
 $date = date("y-m-d H:i:s");
 
-// ステータスに値がある場合（参加or不参加）
 if (isset($status)) {
   if ($status == 'all') {
     $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.start_at >= ? GROUP BY events.id ORDER BY start_at ASC');
@@ -26,6 +24,16 @@ if (isset($status)) {
 }
 $events = $stmt->fetchAll();
 
+
+// ユーザーが管理者かを確認
+$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
+$stmt->execute(array($user_id));
+$is_admin = $stmt->fetch();
+// ログインしたuserの名前を取得
+$stmt_user_name = $db->prepare('SELECT name FROM users WHERE id = ?');
+$stmt_user_name->execute(array($user_id));
+$user_name = $stmt_user_name->fetch();
+
 function get_day_of_week($w)
 {
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
@@ -41,6 +49,8 @@ function get_day_of_week($w)
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <!-- アコーディオンのためにjqueryロード -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>Schedule | POSSE</title>
 </head>
 
@@ -56,11 +66,19 @@ function get_day_of_week($w)
       </div>
       -->
       <!-- ここにユーザーidを埋め込む -->
-      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+      <input type="hidden" name="user_id" value="<?= $user_id ?>">
+
+      <?php if ($is_admin[0] != 0) { ?>
+        <a href="./admin.php" class="cursor-pointer p-2 text-sm text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300 flex items-center justify-center">管理画面へ</a>
+      <?php } ?>
+
     </div>
   </header>
 
   <main class="bg-gray-100">
+
+    <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
+
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
@@ -108,6 +126,22 @@ function get_day_of_week($w)
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           $today = strtotime("today");
+
+          // イベントごとのステータス取得
+          $stmt = $db->prepare('SELECT user_id, status FROM event_attendance WHERE event_id = ? AND user_id = ?');
+          $stmt->execute(array($event['id'], $user_id));
+          $participation_status = $stmt->fetch();
+
+          // 参加者の合計を求める
+          $stmt = $db->prepare("SELECT COUNT(user_id) FROM event_attendance WHERE event_id = ? AND status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participants_total = $stmt->fetch();
+
+          // 参加者の情報を取得
+          $stmt = $db->prepare("SELECT users.name FROM users INNER JOIN event_attendance ON users.id = event_attendance.user_id WHERE event_id = ? AND event_attendance.status = 'presence'");
+          $stmt->execute(array($event['id']));
+          $participant_names = $stmt->fetchAll();
+
           ?>
 
           <!-- ここから単体のイベント -->
@@ -121,22 +155,26 @@ function get_day_of_week($w)
             </div>
             <div class="flex flex-col justify-between text-right">
               <div>
-                <?php if ($event['id'] % 3 === 1) : ?>
-                  <!--
+                <?php if (is_null($participation_status['status'])) : ?>
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
-                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
-                  -->
-                <?php elseif ($event['id'] % 3 === 2) : ?>
-                  <!-- 
+                  <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日 H:i:s", strtotime('-3 day', $end_date)); ?></p>
+                <?php elseif ($participation_status['status'] == 'absence') : ?>
                   <p class="text-sm font-bold text-gray-300">不参加</p>
-                  -->
-                <?php else : ?>
-                  <!-- 
+                <?php elseif ($participation_status['status'] == 'presence') : ?>
                   <p class="text-sm font-bold text-green-400">参加</p>
-                  -->
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
+              <div class="accordion">
+                <a class="accordion_click">
+                  <p class="text-sm"><span class="text-xl"><?= $participants_total[0] ?></span>人参加 ></p>
+                </a>
+                <ul style="display: none">
+                  <p class="font-bold">参加者一覧：</p>
+                  <?php foreach ($participant_names as $participant_name) { ?>
+                    <li><?= $participant_name[0] ?></li>
+                  <?php } ?>
+                </ul>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>
