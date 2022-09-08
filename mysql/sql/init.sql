@@ -1,8 +1,11 @@
 DROP SCHEMA IF EXISTS posse;
+
 CREATE SCHEMA posse;
+
 USE posse;
 
 DROP TABLE IF EXISTS events;
+
 CREATE TABLE events (
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name VARCHAR(10) NOT NULL,
@@ -42,10 +45,10 @@ INSERT INTO events SET name='遊び', start_at='2021/09/22 18:00', end_at='2021/
 INSERT INTO events SET name='ハッカソン', start_at='2021/09/03 10:00', end_at='2021/09/03 22:00';
 INSERT INTO events SET name='遊び', start_at='2022/09/07 18:00', end_at='2022/09/07 22:00';
 INSERT INTO events SET name='スペモク', start_at='2022/09/08 18:00', end_at='2022/09/08 22:00';
-INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00';
-INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00';
-INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00';
-INSERT INTO events SET name='スペモク', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00';
+INSERT INTO events SET name='遊び', start_at='2022/09/09 18:00', end_at='2022/09/09 22:00', detail='みんなでいっぱい遊ぼうね！！何しよっか！！！';
+INSERT INTO events SET name='横モク', start_at='2022/09/10 18:00', end_at='2022/09/10 22:00', detail='横でもくもく！ハッカソンお疲れ様！';
+INSERT INTO events SET name='花火大会', start_at='2022/09/11 18:00', end_at='2022/09/11 22:00', detail='花火大会言ってないなああって思ったそこのあなた！一緒にいきましょ〜〜';
+INSERT INTO events SET name='映画', start_at='2022/09/12 18:00', end_at='2022/09/12 22:00', detail='みんなで久しぶりにmovie nightしたいなああ----';
 INSERT INTO events SET name='遊び', start_at='2022/09/13 18:00', end_at='2022/09/13 22:00';
 INSERT INTO events SET name='海', start_at='2022/09/14 18:00', end_at='2022/09/14 22:00';
 INSERT INTO events SET name='浅草', start_at='2022/09/15 18:00', end_at='2022/09/15 22:00';
@@ -67,16 +70,14 @@ CREATE TABLE users (
   is_admin TINYINT DEFAULT 0
 );
 
-INSERT INTO 
-  users 
+INSERT INTO users
 SET
   email = "user@posse.com",
   name = "山田康介",
   password = sha1('pass'), 
   is_admin = 1;
 
-INSERT INTO 
-  users 
+INSERT INTO users
 SET
   email = "user2@posse.com",
   name = "寺岡修馬",
@@ -89,15 +90,19 @@ SET
   name = "大友裕太",
   password = sha1('pass');
 
+
 -- パスワードリセット関連です。
 
 DROP TABLE IF EXISTS user_password_reset;
 
-CREATE TABLE user_password_reset (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    pass_token VARCHAR(255) NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+CREATE TABLE
+    user_password_reset (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        email VARCHAR(255) NOT NULL,
+        pass_token VARCHAR(255) NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
 
+INSERT INTO user_password_reset(email, pass_token);
 
+VALUES ("test@test.com", "test");

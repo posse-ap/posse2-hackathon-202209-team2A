@@ -23,6 +23,16 @@ if (isset($status)) {
 }
 $events = $stmt->fetchAll();
 
+
+// ユーザーが管理者かを確認
+$stmt = $db->prepare('SELECT COUNT(id) FROM users WHERE is_admin = 1 AND id = ?');
+$stmt->execute(array($user_id));
+$is_admin = $stmt->fetch();
+// ログインしたuserの名前を取得
+$stmt_user_name = $db->prepare('SELECT name FROM users WHERE id = ?');
+$stmt_user_name->execute(array($user_id));
+$user_name = $stmt_user_name->fetch();
+
 function get_day_of_week($w)
 {
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
@@ -65,6 +75,7 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
+    <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
