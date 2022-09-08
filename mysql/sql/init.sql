@@ -67,6 +67,6 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (email, password, name, github_id) VALUES ("user@posse.com","pass", "横山健人", "Y-K-15");
-INSERT INTO users (email, password, name, github_id) VALUES ("user2@posse.com","pass", "寺岡修馬", "kohei23n");
+INSERT INTO users (email, password, name, github_id) VALUES ("user2@posse.com","pass", "西川航平", "kohei23n");
 INSERT INTO users (email, password, name, github_id) VALUES ("user3@posse.com","pass", "冨永桃", "momo-0315");
 

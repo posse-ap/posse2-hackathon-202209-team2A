@@ -53,10 +53,20 @@ function get_day_of_week($w)
       -->
       <!-- ここにユーザーidを埋め込む -->
       <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
+
+      <?php 
+      
+      // ログインしたuserの名前を取得
+      $stmt_user_name = $db->prepare('SELECT name FROM users WHERE id = ?');
+      $stmt_user_name->execute(array($user_id));
+      $user_name = $stmt_user_name->fetch();
+
+      ?>
     </div>
   </header>
 
   <main class="bg-gray-100">
+    <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
