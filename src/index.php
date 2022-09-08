@@ -202,8 +202,12 @@ function get_day_of_week($w)
             // echo $now . ' ';
             $now_html = "<p>$now</p>";
             echo $now_html;
-          } else {
+          } else if ($status == null){
             $page_link_ref = "/index.php?page_id=$i";
+            $page_link_html = "<p><a href='$page_link_ref'>$i</a></p>";
+            echo $page_link_html;
+          }else{
+            $page_link_ref = "/index.php?page_id=$i&status=$status";
             $page_link_html = "<p><a href='$page_link_ref'>$i</a></p>";
             echo $page_link_html;
           }
