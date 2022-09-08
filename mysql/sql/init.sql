@@ -84,7 +84,7 @@ CREATE TABLE users (
 INSERT INTO users
 SET
   email = "user@posse.com",
-  name = "山田康介",
+  name = "横山健人",
   password = sha1('pass'), 
   is_admin = 1,
   github_id = "Y-K-15";
@@ -92,7 +92,7 @@ SET
 INSERT INTO users
 SET
   email = "user2@posse.com",
-  name = "寺岡修馬",
+  name = "西川航平",
   password = sha1('pass'),
   github_id = "kohei23n";
 
@@ -100,7 +100,7 @@ INSERT INTO
   users 
 SET
   email = "user3@posse.com",
-  name = "大友裕太",
+  name = "冨永桃",
   password = sha1('pass'),
   github_id = "momo-0315";
 
