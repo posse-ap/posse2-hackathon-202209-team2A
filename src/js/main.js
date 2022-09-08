@@ -94,18 +94,21 @@ async function openModal(eventId) {
         `
         break;
     }
-    modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
 
 
     // アコーディオン
     $(function(){
-      $('.accordion_click').click(function(){
-          //クリックされた要素に隣接する要素が開いたり閉じたりする
-          $(this).next('ul').slideToggle();
-          // モーダルが開くのを防止
-          return false;
-      });
-  });
+        $('.accordion_click').click(function(){
+            //クリックされた要素に隣接する要素が開いたり閉じたりする
+            $(this).next('ul').slideToggle();
+            // モーダルが開くのを防止
+            return false;
+        });
+    });
+
+    modalInnerHTML.insertAdjacentHTML('afterbegin', modalHTML)
+
+
 
 
   } catch (error) {
@@ -113,18 +116,6 @@ async function openModal(eventId) {
   }
   toggleModal()
 }
-
-
-$(function () {
-  $('.js-menu__item__link_modal').each(function () {
-    $(this).on('click', function () {
-      $("+.submenu_modal", this).slideToggle();
-      $(".open-button_modal").toggleClass('change-direction');
-      $(".open-button_modal .chevron-wrapper_modal").toggleClass('participant-arrow');
-      return false;
-    });
-  });
-});
 
 function closeModal() {
   modalInnerHTML.innerHTML = ''

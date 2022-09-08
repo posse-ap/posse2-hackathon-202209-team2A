@@ -70,14 +70,18 @@ function get_day_of_week($w)
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
-          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == null) {
-                                                                                                        echo 'bg-blue-600 text-white';
-                                                                                                      } ?>" id="filter_status_all">全て</a>
+          <a href="./index.php?status=all" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "all") {
+                                                                                                                    echo 'bg-blue-600 text-white';
+                                                                                                                  } ?>">全て</a>
           <a href="./index.php?status=presence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "presence") {
                                                                                                                         echo 'bg-blue-600 text-white';
-                                                                                                                      } ?>" id="filter_status_presence">参加</a>
-          <!-- <a href="./index.php?status=absense" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a> -->
+                                                                                                                      } ?>">参加</a>
+          <a href="./index.php?status=absence" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == "absence") {
+                                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                                      } ?>">不参加</a>
+          <a href="./index.php" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white <?php if ($status == null) {
+                                                                                                        echo 'bg-blue-600 text-white';
+                                                                                                      } ?>">未回答</a>
         </div>
       </div>
 
@@ -141,7 +145,7 @@ function get_day_of_week($w)
                   <p class="font-bold">参加者一覧：</p>
                   <?php foreach ($participant_names as $participant_name) { ?>
                     <li><?= $participant_name[0] ?></li>
-                  <?php }?>
+                  <?php } ?>
                 </ul>
               </div>
             </div>
