@@ -22,8 +22,6 @@ $participants = $stmt->fetchAll();
 
 foreach ($participants as $participant) {
 
-    var_dump($participant[1]);
-
     $to = $participant['email'];
     $user_name = $participant['name'];
     $three_days_later_event_name = $participant[1];
