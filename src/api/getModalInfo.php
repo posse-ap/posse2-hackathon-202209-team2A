@@ -4,6 +4,7 @@ require('../dbconnect.php');
 header('Content-Type: application/json; charset=UTF-8');
 
 if (isset($_GET['eventId'])) {
+  $userId = $_SESSION['user_id'];
   $eventId = htmlspecialchars($_GET['eventId']);
   $userId = $_SESSION['user_id'];
   try {
@@ -47,7 +48,6 @@ if (isset($_GET['eventId'])) {
       'message' => $eventMessage,
       'status' => $status,
       'participation_status' => $participation_status['status'],
-      'participant_names' => $participant_names,
       'deadline' => date("m月d日 H:i:s", strtotime('-3 day', $end_date)),
     ];
     
