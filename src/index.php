@@ -89,7 +89,10 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
-    <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
+    <div class="flex justify-around">
+      <p class="p-3">ようこそ<?php echo $user_name['name'];?>さん！</p>
+      <p class="p-3"><a href="./auth/login/logout.php">ログアウトはこちら</a></p>
+    </div>
     <div class="w-full mx-auto p-5">
       <!-- イベント参加状況フィルターのボタン -->
       <div id="filter" class="mb-8">
