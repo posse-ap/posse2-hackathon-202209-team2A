@@ -80,6 +80,14 @@ function get_day_of_week($w)
         </div>
       </div>
 
+<!-- ページング関係 -->
+      <?php
+        $count_sql = 'SELECT count(*) FROM events WHERE start_at = ? ';
+        $stmt = $db->prepare($count_sql);
+        $stmt->execute(array($));
+        $result = $stmt->fetch();
+      ?>
+
       <!-- 各イベントカード -->
       <div id="events-list">
         <div class="flex justify-between items-center mb-3">
