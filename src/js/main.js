@@ -41,14 +41,12 @@ async function openModal(eventId) {
 
       <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
     `
-    switch (0) {
-      case 0:
+    switch (event.participation_status) {
+      case null:
         modalHTML += `
           <div class="text-center mt-6">
-            <!--
             <p class="text-lg font-bold text-yellow-400">未回答</p>
             <p class="text-xs text-yellow-400">期限 ${event.deadline}</p>
-            -->
           </div>
           <div class="flex mt-5">
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" name="presence" value="presence" onclick="participateEvent(${eventId})">参加する</button>
@@ -56,7 +54,7 @@ async function openModal(eventId) {
           </div>
         `
         break;
-      case 1:
+      case 'presence':
         modalHTML += `
           <div class="text-center mt-10">
             <p class="text-xl font-bold text-green-400">参加</p>
@@ -67,7 +65,7 @@ async function openModal(eventId) {
           </div>
         `
         break;
-      case 2:
+      case 'absence':
         modalHTML += `
           <div class="text-center mt-10">
             <p class="text-xl font-bold text-gray-300">不参加</p>

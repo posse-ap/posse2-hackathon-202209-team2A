@@ -1,8 +1,10 @@
 <?php
+session_start();
 require('../dbconnect.php');
 header('Content-Type: application/json; charset=UTF-8');
 
 if (isset($_GET['eventId'])) {
+  $userId = $_SESSION['user_id'];
   $eventId = htmlspecialchars($_GET['eventId']);
   try {
     $stmt = $db->prepare('SELECT events.id, events.name, events.start_at, events.end_at FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id WHERE events.id = ? GROUP BY events.id');
